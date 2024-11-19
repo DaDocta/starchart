@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import fetchData from '../utils/fetchData';
 import { useNavigate } from 'react-router-dom';
+import fetchData from '../utils/fetchData';
 import '../styles/Home.css';
 
 const Home = () => {
@@ -18,25 +18,15 @@ const Home = () => {
         const fileNames = await fetchData(listFilesUrl);
         const fetchedProfiles = await Promise.all(
           fileNames.map(async (fileName) => {
-            try {
-              const profile = await fetchData(`${getFileUrl}?fileName=${fileName}`);
-              if (profile && profile.name) {
-                return profile;
-              } else {
-                console.warn(`Invalid or incomplete profile: ${fileName}`, profile);
-              }
-            } catch (error) {
-              console.error(`Failed to fetch profile for ${fileName}:`, error);
-            }
-            return null;
+            const profile = await fetchData(`${getFileUrl}?fileName=${fileName}`);
+            return profile && profile.name ? profile : null;
           })
         );
-
-        setProfiles(fetchedProfiles.filter(Boolean)); // Remove null profiles
-        setError(null); // Clear errors
-      } catch (error) {
-        console.error('Error fetching profiles:', error);
-        setError(error.message);
+        setProfiles(fetchedProfiles.filter(Boolean));
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching profiles:', err);
+        setError(err.message);
       }
     };
 
@@ -47,30 +37,12 @@ const Home = () => {
     profile.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  if (error) {
-    return <div style={{ color: 'red' }}>Error: {error}</div>;
-  }
+  if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
 
   return (
     <div className="home">
       <header>
         <h1>Star-Themed Portfolio</h1>
-        <div id="choiceButtons">
-          <button onClick={() => navigate('/portfolio')}>Portfolio</button>
-          <button onClick={() => navigate('/edit')}>Edit</button>
-          <button
-            onClick={() => {
-              const password = prompt('Enter password to access everything:');
-              if (password === 'dadocta') {
-                navigate('/everything');
-              } else {
-                alert('Incorrect password.');
-              }
-            }}
-          >
-            Everything
-          </button>
-        </div>
         <input
           type="text"
           placeholder="Search profiles..."
