@@ -1,36 +1,11 @@
-/* src/styles/Home.css */
-
-.home-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  height: 100vh;
-  width: 100vw;
-  color: white;
-  font-family: 'Cinzel', serif;
+/* Home.css */
+.home {
+  background: lightblue; /* Add a background color */
+  color: black;
+  height: 100vh; /* Ensure it takes full screen */
 }
 
-.home-content p {
-  margin-bottom: 20px;
-}
-
-.stars-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-}
-
-@media (orientation: portrait) {
-  .home-content p {
-    font-size: 9vw; /* Increase font size specifically for portrait mode */
-  }
-}
-
-@media (orientation: landscape) {
-  .home-content p {
-    font-size: 5vw; /* Increase font size specifically for portrait mode */
-  }
+.profile-list {
+  border: 1px solid black; /* Highlight the profile list container */
+  padding: 10px;
 }

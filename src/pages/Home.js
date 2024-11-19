@@ -13,16 +13,22 @@ const Home = () => {
   const getFileUrl = 'https://starchart-988582688687.us-central1.run.app/getFile';
 
   useEffect(() => {
+    console.log("Fetching profiles..."); // Debugging
     const fetchProfiles = async () => {
       try {
         const fileNames = await fetchData(listFilesUrl);
+        console.log("File names:", fileNames); // Debugging
+
         const fetchedProfiles = await Promise.all(
           fileNames.map(async (fileName) => {
             const profile = await fetchData(`${getFileUrl}?fileName=${fileName}`);
+            console.log(`Fetched profile for ${fileName}:`, profile); // Debugging
             return profile && profile.name ? profile : null;
           })
         );
+
         setProfiles(fetchedProfiles.filter(Boolean));
+        console.log("Profiles set:", fetchedProfiles); // Debugging
         setError(null);
       } catch (err) {
         console.error('Error fetching profiles:', err);
@@ -36,6 +42,8 @@ const Home = () => {
   const filteredProfiles = profiles.filter((profile) =>
     profile.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  console.log("Filtered profiles:", filteredProfiles); // Debugging
 
   if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
 
