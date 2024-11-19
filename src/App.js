@@ -7,8 +7,6 @@ import Product from './pages/Product';
 import Cart from './pages/Cart';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Checkout from './pages/Checkout';
-import Checkedout from './pages/Checkedout';
 import Debug from './pages/Debug';
 import BackgroundVideo from './components/BackgroundVideo';
 import { AuthProvider, AuthContext } from './AuthContext'; // Import AuthContext and AuthProvider
@@ -42,8 +40,6 @@ const App = () => {
                     <Route path="/cart" element={isAuthenticated ? <Cart /> : <Navigate to="/login" replace />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
-                    <Route path="/checkout" element={<Checkout />} />
-                    <Route path="/checkedout" element={<Checkedout />} />
                     <Route path="/debug" element={<Debug />} />
                   </Routes>
                 )}
