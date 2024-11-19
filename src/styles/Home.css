@@ -1,11 +1,30 @@
 .home {
     padding: 20px;
+    text-align: center;
+  }
+  
+  .button-group {
+    margin-bottom: 20px;
+  }
+  
+  .button-group button {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #61dafb;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .button-group button:hover {
+    background-color: #21a1f1;
+    color: white;
   }
   
   input {
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px;
+    margin: 20px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
   }
@@ -21,6 +40,12 @@
     padding: 15px;
     border-radius: 5px;
     background-color: #f9f9f9;
+    cursor: pointer;
+  }
+  
+  .profile.selected {
+    border: 2px solid #61dafb;
+    background-color: #eaf6ff;
   }
   
   .profile h2 {

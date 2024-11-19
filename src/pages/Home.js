@@ -1,26 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/Home.css";
 
 const Home = () => {
   const [profiles, setProfiles] = useState([]);
-  const [filteredProfiles, setFilteredProfiles] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedName, setSelectedName] = useState("");
+  const navigate = useNavigate();
 
-  // API Endpoints
   const listFilesUrl = "https://starchart-988582688687.us-central1.run.app/listFiles";
   const getFileUrl = "https://starchart-988582688687.us-central1.run.app/getFile";
 
-  // Fetch JSON files from the bucket
+  // Fetch profiles (you can use useEffect if this is needed to auto-fetch on mount)
   const fetchProfiles = async () => {
     try {
-      // Fetch the list of JSON file names
       const response = await fetch(listFilesUrl);
       if (!response.ok) throw new Error("Failed to fetch file list");
 
       const fileNames = await response.json();
       const fetchedProfiles = [];
 
-      // Fetch each profile file's content
       for (const fileName of fileNames) {
         try {
           const profileResponse = await fetch(`${getFileUrl}?fileName=${fileName}`);
@@ -36,33 +35,40 @@ const Home = () => {
       }
 
       setProfiles(fetchedProfiles);
-      setFilteredProfiles(fetchedProfiles);
     } catch (error) {
       console.error("Error fetching profiles:", error);
     }
   };
 
-  // Handle search input
   const handleSearch = (e) => {
-    const query = e.target.value.toLowerCase();
-    setSearchQuery(query);
-
-    // Filter profiles based on the search query
-    const results = profiles.filter(
-      (profile) =>
-        profile.name.toLowerCase().includes(query) ||
-        (profile.description && profile.description.toLowerCase().includes(query))
-    );
-    setFilteredProfiles(results);
+    setSearchQuery(e.target.value.toLowerCase());
   };
 
-  // Fetch profiles on component mount
-  useEffect(() => {
-    fetchProfiles();
-  }, []);
+  const selectName = (name) => {
+    setSelectedName(name);
+  };
+
+  const navigateToPage = (page) => {
+    if (selectedName) {
+      navigate(`/${page}/${selectedName}`);
+    } else {
+      alert("Please search for and select a name first.");
+    }
+  };
+
+  // Filter profiles based on search
+  const filteredProfiles = profiles.filter((profile) =>
+    profile.name.toLowerCase().includes(searchQuery)
+  );
 
   return (
     <div className="home">
+      <h1>Choose an Option</h1>
+      <div className="button-group">
+        <button onClick={() => navigateToPage("edit")}>Edit</button>
+        <button onClick={() => navigateToPage("profile")}>Profile</button>
+        <button onClick={() => navigateToPage("everything")}>Everything</button>
+      </div>
       <input
         type="text"
         placeholder="Search profiles..."
@@ -72,7 +78,11 @@ const Home = () => {
       <div className="profiles">
         {filteredProfiles.length > 0 ? (
           filteredProfiles.map((profile, index) => (
-            <div key={index} className="profile">
+            <div
+              key={index}
+              className={`profile ${selectedName === profile.name ? "selected" : ""}`}
+              onClick={() => selectName(profile.name)}
+            >
               <h2>{profile.name}</h2>
               <p>{profile.description || "No description available"}</p>
             </div>
