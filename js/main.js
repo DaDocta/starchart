@@ -41,12 +41,14 @@ const fetchProfiles = async () => {
     profiles = [];
     for (const fileName of fileNames) {
       try {
+        console.log(`Fetching profile for file: ${fileName}`); // Debugging: Fetching individual profile
         const profileResponse = await fetch(`${getFileUrl}?fileName=${fileName}`);
         if (!profileResponse.ok) {
           console.error(`Failed to fetch profile for file: ${fileName}. HTTP status: ${profileResponse.status}`);
           continue; // Skip problematic files
         }
         const profile = await profileResponse.json();
+        console.log(`Fetched profile:`, profile); // Debugging: Log the entire profile object
         if (profile && profile.name) {
           profiles.push(profile); // Add only valid profiles
         } else {
@@ -57,7 +59,7 @@ const fetchProfiles = async () => {
       }
     }
 
-    console.log("Fetched profiles:", profiles); // Debugging: Final profiles array
+    console.log("Fetched profiles array:", profiles); // Debugging: Final profiles array
     renderProfiles(); // Render profiles after fetching
   } catch (error) {
     console.error("Error loading profiles:", error); // Debugging: Overall fetch error
