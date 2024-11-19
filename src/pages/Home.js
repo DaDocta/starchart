@@ -18,9 +18,11 @@ const Home = () => {
     const fetchProfiles = async () => {
       try {
         const fileNames = await fetchData(listFilesUrl);
+        console.log('Fetched file names:', fileNames); // Debugging file names
         const fetchedProfiles = await Promise.all(
           fileNames.map(async (fileName) => {
             const profile = await fetchData(`${getFileUrl}?fileName=${fileName}`);
+            console.log(`Fetched profile for ${fileName}:`, profile); // Debugging profile content
             return profile && profile.name ? profile : null;
           })
         );
@@ -37,7 +39,7 @@ const Home = () => {
 
   const handleSearch = () => {
     const profile = profiles.find(
-      (p) => p.name.toLowerCase() === searchQuery.toLowerCase().trim()
+      (p) => p.name.toLowerCase().trim() === searchQuery.toLowerCase().trim()
     );
 
     if (profile) {
