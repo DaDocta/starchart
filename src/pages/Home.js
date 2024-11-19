@@ -17,16 +17,31 @@ const Home = () => {
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
+        console.log('Fetching file names...');
         const fileNames = await fetchData(listFilesUrl);
-        console.log('Fetched file names:', fileNames); // Debugging file names
+        console.log('Fetched file names:', fileNames);
+
         const fetchedProfiles = await Promise.all(
           fileNames.map(async (fileName) => {
-            const profile = await fetchData(`${getFileUrl}?fileName=${fileName}`);
-            console.log(`Fetched profile for ${fileName}:`, profile); // Debugging profile content
-            return profile && profile.name ? profile : null;
+            try {
+              const profile = await fetchData(`${getFileUrl}?fileName=${fileName}`);
+              if (profile && profile.name) {
+                console.log(`Fetched profile for ${fileName}:`, profile);
+                return profile;
+              } else {
+                console.warn(`Invalid or missing profile data for ${fileName}:`, profile);
+                return null;
+              }
+            } catch (error) {
+              console.error(`Error fetching profile for ${fileName}:`, error);
+              return null;
+            }
           })
         );
-        setProfiles(fetchedProfiles.filter(Boolean));
+
+        const validProfiles = fetchedProfiles.filter(Boolean); // Filter out null profiles
+        setProfiles(validProfiles);
+        console.log('Final profiles:', validProfiles);
         setError(null);
       } catch (err) {
         console.error('Error fetching profiles:', err);
@@ -38,15 +53,18 @@ const Home = () => {
   }, []);
 
   const handleSearch = () => {
+    console.log('Search query:', searchQuery);
     const profile = profiles.find(
-      (p) => p.name.toLowerCase().trim() === searchQuery.toLowerCase().trim()
+      (p) => p.name.toLowerCase() === searchQuery.toLowerCase().trim()
     );
 
     if (profile) {
       const urlSuffix = profile.name.toLowerCase().replace(/\s+/g, '');
+      console.log(`Navigating to /starchart/${selectedOption}/${urlSuffix}`);
       setNotFound(false); // Reset "not found" state
       navigate(`/starchart/${selectedOption}/${urlSuffix}`);
     } else {
+      console.warn('Profile not found for query:', searchQuery);
       setNotFound(true); // Display "not found" message
     }
   };
