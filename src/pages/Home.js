@@ -20,44 +20,44 @@ const Home = () => {
         console.log('Fetching file names...');
         const fileNames = await fetchData(listFilesUrl);
         console.log('Fetched file names:', fileNames);
-
+  
         const fetchedProfiles = await Promise.all(
           fileNames.map(async (fileName) => {
             try {
               const profile = await fetchData(`${getFileUrl}?fileName=${fileName}`);
               if (profile && profile.name) {
-                console.log(`Fetched profile for ${fileName}:`, profile);
+                console.log(`Valid profile for ${fileName}:`, profile);
                 return profile;
               } else {
                 console.warn(`Invalid profile for ${fileName}:`, profile);
                 return null;
               }
-            } catch (err) {
-              console.error(`Error fetching profile for ${fileName}:`, err);
+            } catch (error) {
+              console.error(`Error fetching profile for ${fileName}:`, error);
               return null;
             }
           })
         );
-
-        const validProfiles = fetchedProfiles.filter(Boolean);
+  
+        const validProfiles = fetchedProfiles.filter(Boolean); // Keep only valid profiles
         console.log('Valid profiles:', validProfiles);
         setProfiles(validProfiles);
-        setError(null);
-      } catch (err) {
-        console.error('Error fetching profiles:', err);
-        setError(err.message);
+      } catch (error) {
+        console.error('Error fetching profiles:', error);
+        setError(error.message);
       }
     };
-
+  
     fetchProfiles();
   }, []);
+  
 
   const handleSearch = () => {
     const query = searchQuery.toLowerCase().trim();
     console.log('Search query:', query);
-
+  
     const profile = profiles.find((p) => p.name.toLowerCase() === query);
-
+  
     if (profile) {
       const urlSuffix = profile.name.toLowerCase().replace(/\s+/g, '');
       console.log(`Navigating to /starchart/${selectedOption}/${urlSuffix}`);
@@ -68,6 +68,7 @@ const Home = () => {
       setNotFound(true);
     }
   };
+  
 
   if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
 
