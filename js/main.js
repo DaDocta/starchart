@@ -26,20 +26,19 @@ everythingBtn.addEventListener("click", () => {
   }
 });
 
-// Set active mode
-const setMode = (newMode) => {
-  mode = newMode;
-  document.querySelectorAll("#choiceButtons button").forEach(button => button.classList.remove("active"));
-  document.getElementById(`${newMode}Btn`).classList.add("active");
-  renderProfiles();
-};
-
 // Fetch JSON profiles dynamically
 const fetchProfiles = async () => {
   profileList.innerHTML = "<p>Loading profiles...</p>";
   try {
-    const response = await fetch(`${profilesDir}/index.json`);
-    profiles = await response.json();
+    const response = await fetch(`${profilesDir}/index.json`); // Fetch index.json containing file names
+    const files = await response.json();
+
+    profiles = [];
+    for (const file of files) {
+      const profileResponse = await fetch(`${profilesDir}/${file}`);
+      const profile = await profileResponse.json();
+      profiles.push(profile);
+    }
     renderProfiles();
   } catch (error) {
     console.error("Error loading profiles:", error);
@@ -47,7 +46,7 @@ const fetchProfiles = async () => {
   }
 };
 
-// Render profiles based on mode
+// Render profiles based on mode and search query
 const renderProfiles = () => {
   profileList.innerHTML = "";
   const query = searchInput.value.toLowerCase();
@@ -63,20 +62,27 @@ const renderProfiles = () => {
 
   filteredProfiles.forEach(profile => {
     const name = profile.name;
-    const urlSuffix = profile.urlSuffix;
+    const urlSuffix = name.toLowerCase().replace(/\s+/g, ""); // Convert name to URL-friendly format
 
     const profileDiv = document.createElement("div");
     profileDiv.className = "profile-item";
     profileDiv.innerHTML = `
       <h2>${name}</h2>
-      <a href="${mode}.html?name=${urlSuffix}">${capitalize(mode)} Page</a>
+      <a href="site/webportfolio.html?name=${urlSuffix}">Web Portfolio</a>
+      <a href="site/edit.html?name=${urlSuffix}">Edit</a>
+      <a href="site/everything.html?name=${urlSuffix}">Everything</a>
     `;
     profileList.appendChild(profileDiv);
   });
 };
 
-// Utility function to capitalize
-const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+// Set active mode
+const setMode = (newMode) => {
+  mode = newMode;
+  document.querySelectorAll("#choiceButtons button").forEach(button => button.classList.remove("active"));
+  document.getElementById(`${newMode}Btn`).classList.add("active");
+  renderProfiles();
+};
 
 // Initial Load
 fetchProfiles();
