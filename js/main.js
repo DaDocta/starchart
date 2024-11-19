@@ -49,10 +49,10 @@ const fetchProfiles = async () => {
         }
         const profile = await profileResponse.json();
         console.log(`Fetched profile:`, profile); // Debugging: Log the entire profile object
-        if (profile && profile.name) {
+        if (profile && typeof profile.name === 'string') {
           profiles.push(profile); // Add only valid profiles
         } else {
-          console.warn(`Profile is invalid or missing a name: ${fileName}`, profile); // Debugging: Invalid profile
+          console.warn(`Profile is invalid or missing a valid name: ${fileName}`, profile); // Debugging: Invalid profile
         }
       } catch (profileError) {
         console.error(`Error fetching profile for file: ${fileName}`, profileError); // Debugging: Individual fetch error
@@ -74,7 +74,7 @@ const renderProfiles = () => {
 
   // Filter valid profiles and match the search query
   const filteredProfiles = profiles.filter(profile => {
-    if (profile && profile.name) {
+    if (profile && typeof profile.name === 'string') {
       return profile.name.toLowerCase().includes(query);
     } else {
       console.warn("Skipping invalid profile:", profile); // Debugging: Skipped invalid profile
