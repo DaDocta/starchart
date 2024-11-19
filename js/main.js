@@ -29,27 +29,24 @@ everythingBtn.addEventListener("click", () => {
 
 // Fetch JSON profiles dynamically from Google Cloud Functions
 const fetchProfiles = async () => {
-  profileList.innerHTML = "<p>Loading profiles...</p>";
   try {
-    // Fetch the list of JSON files
-    const response = await fetch(listFilesUrl);
+    const response = await fetch('https://starchart-988582688687.us-central1.run.app/listFiles');
     const fileNames = await response.json();
 
-    // Fetch each JSON file's content
     profiles = [];
     for (const fileName of fileNames) {
-      const profileResponse = await fetch(`${getFileUrl}?fileName=${fileName}`);
+      const profileResponse = await fetch(`https://starchart-988582688687.us-central1.run.app/getFile?fileName=${fileName}`);
       const profile = await profileResponse.json();
       profiles.push(profile);
     }
 
-    // Render the profiles
     renderProfiles();
   } catch (error) {
     console.error("Error loading profiles:", error);
     profileList.innerHTML = "<p>Failed to load profiles. Check the console for details.</p>";
   }
 };
+
 
 // Render profiles based on mode and search query
 const renderProfiles = () => {
