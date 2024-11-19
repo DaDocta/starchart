@@ -1,13 +1,13 @@
 // Constants
-const listFilesUrl = 'https://starchart-988582688687.us-central1.run.app/listFiles'; // Replace with the URL for the listFiles function
-const getFileUrl = 'https://starchart-988582688687.us-central1.run.app/getFile';     // Replace with the URL for the getFile function
+const listFilesUrl = 'https://starchart-988582688687.us-central1.run.app/listFiles'; // API endpoint for listing files
+const getFileUrl = 'https://starchart-988582688687.us-central1.run.app/getFile';     // API endpoint for fetching individual files
 const everythingPassword = "dadocta";
 
 // DOM Elements
 const searchInput = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
 const profileList = document.getElementById("profileList");
-const PortfolioBtn = document.getElementById("PortfolioBtn");
+const portfolioBtn = document.getElementById("PortfolioBtn");
 const editBtn = document.getElementById("editBtn");
 const everythingBtn = document.getElementById("everythingBtn");
 
@@ -16,7 +16,7 @@ let mode = "Portfolio"; // Default view mode
 let profiles = []; // Stores all profiles
 
 // Event Listeners for Choice Buttons
-PortfolioBtn.addEventListener("click", () => setMode("Portfolio"));
+portfolioBtn.addEventListener("click", () => setMode("Portfolio"));
 editBtn.addEventListener("click", () => setMode("edit"));
 everythingBtn.addEventListener("click", () => {
   const password = prompt("Enter the password to view Everything:");
@@ -30,12 +30,18 @@ everythingBtn.addEventListener("click", () => {
 // Fetch JSON profiles dynamically from Google Cloud Functions
 const fetchProfiles = async () => {
   try {
-    const response = await fetch('https://starchart-988582688687.us-central1.run.app/listFiles');
+    const response = await fetch(listFilesUrl);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     const fileNames = await response.json();
 
     profiles = [];
     for (const fileName of fileNames) {
-      const profileResponse = await fetch(`https://starchart-988582688687.us-central1.run.app/getFile?fileName=${fileName}`);
+      const profileResponse = await fetch(`${getFileUrl}?fileName=${fileName}`);
+      if (!profileResponse.ok) {
+        throw new Error(`HTTP error! status: ${profileResponse.status}`);
+      }
       const profile = await profileResponse.json();
       profiles.push(profile);
     }
@@ -47,12 +53,12 @@ const fetchProfiles = async () => {
   }
 };
 
-
 // Render profiles based on mode and search query
 const renderProfiles = () => {
-  profileList.innerHTML = "";
+  profileList.innerHTML = ""; // Clear the current list
   const query = searchInput.value.toLowerCase();
 
+  // Filter profiles based on search query
   const filteredProfiles = profiles.filter(profile =>
     profile.name.toLowerCase().includes(query)
   );
@@ -62,6 +68,7 @@ const renderProfiles = () => {
     return;
   }
 
+  // Create profile items dynamically
   filteredProfiles.forEach(profile => {
     const name = profile.name;
     const urlSuffix = name.toLowerCase().replace(/\s+/g, ""); // Convert name to URL-friendly format
@@ -78,17 +85,19 @@ const renderProfiles = () => {
   });
 };
 
-// Set active mode
+// Set active mode and re-render profiles
 const setMode = (newMode) => {
   mode = newMode;
-  document.querySelectorAll("#choiceButtons button").forEach(button => button.classList.remove("active"));
+
+  // Update button styles
+  document.querySelectorAll("#choiceButtons button").forEach(button => {
+    button.classList.remove("active");
+  });
   document.getElementById(`${newMode}Btn`).classList.add("active");
+
+  // Rerender profiles if needed
   renderProfiles();
 };
-
-// Initial Load
-fetchProfiles();
-searchBtn.addEventListener("click", renderProfiles);
 
 // Add random stars to the background
 const createStars = () => {
@@ -108,4 +117,7 @@ const createStars = () => {
   document.body.appendChild(starryBg);
 };
 
-createStars();
+// Initial Setup
+createStars(); // Add stars to the background
+fetchProfiles(); // Fetch profiles on load
+searchBtn.addEventListener("click", renderProfiles); // Add event listener for search
