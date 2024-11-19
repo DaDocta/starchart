@@ -1,9 +1,9 @@
-name: Deploy HTML and CSS to GitHub Pages
+name: Deploy Static Site
 
 on:
   push:
     branches:
-      - main  # Deploy on pushes to the main branch
+      - main  # Trigger deployment when pushing to the main branch
 
 jobs:
   deploy:
@@ -14,10 +14,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Step 2: Deploy to GitHub Pages
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: main
-        publish_dir: ./  # Root directory of your site
+    # Step 2: Verify Deployment Directory
+    # Optional: Ensure your files are in the correct location (root folder)
+    - name: Ensure Static Files Exist
+      run: |
+        ls -la # List files for debugging
+
+    # Step 3: Skip gh-pages Step
+    # Since you are deploying directly from `main`, you do not need to push files to a different branch.
