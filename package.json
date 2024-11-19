@@ -1,0 +1,19 @@
+{
+    "name": "html-css-js-project",
+    "version": "1.0.0",
+    "description": "A simple HTML, CSS, and JavaScript project.",
+    "main": "index.js",
+    "scripts": {
+      "start": "live-server", 
+      "lint": "eslint .",
+      "format": "prettier --write ."
+    },
+    "author": "Your Name",
+    "license": "MIT",
+    "devDependencies": {
+      "eslint": "^8.50.0",
+      "prettier": "^3.0.3",
+      "live-server": "^1.2.1"
+    }
+  }
+  
