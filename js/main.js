@@ -40,10 +40,11 @@ const fetchProfiles = async () => {
     for (const fileName of fileNames) {
       const profileResponse = await fetch(`${getFileUrl}?fileName=${fileName}`);
       if (!profileResponse.ok) {
-        throw new Error(`HTTP error! status: ${profileResponse.status}`);
+        console.error(`Error fetching profile for file: ${fileName}`);
+        continue;
       }
       const profile = await profileResponse.json();
-      profiles.push(profile);
+      if (profile && profile.name) profiles.push(profile);
     }
 
     renderProfiles();
@@ -60,7 +61,7 @@ const renderProfiles = () => {
 
   // Filter profiles based on search query
   const filteredProfiles = profiles.filter(profile =>
-    profile.name.toLowerCase().includes(query)
+    profile && profile.name && profile.name.toLowerCase().includes(query)
   );
 
   if (filteredProfiles.length === 0) {
