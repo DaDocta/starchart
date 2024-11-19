@@ -29,56 +29,63 @@ everythingBtn.addEventListener("click", () => {
 
 // Fetch JSON profiles dynamically from Google Cloud Functions
 const fetchProfiles = async () => {
+  console.log("Fetching profile list from:", listFilesUrl); // Debugging: API URL
   try {
     const response = await fetch(listFilesUrl);
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`Failed to fetch profile list. HTTP status: ${response.status}`);
     }
     const fileNames = await response.json();
+    console.log("Received file names:", fileNames); // Debugging: File names
 
     profiles = [];
     for (const fileName of fileNames) {
       try {
         const profileResponse = await fetch(`${getFileUrl}?fileName=${fileName}`);
         if (!profileResponse.ok) {
-          console.error(`Error fetching profile for file: ${fileName}`);
+          console.error(`Failed to fetch profile for file: ${fileName}. HTTP status: ${profileResponse.status}`);
           continue; // Skip problematic files
         }
         const profile = await profileResponse.json();
         if (profile && profile.name) {
           profiles.push(profile); // Add only valid profiles
         } else {
-          console.warn(`Profile is missing a name or is invalid: ${fileName}`, profile);
+          console.warn(`Profile is invalid or missing a name: ${fileName}`, profile); // Debugging: Invalid profile
         }
       } catch (profileError) {
-        console.error(`Error fetching profile for file: ${fileName}`, profileError);
+        console.error(`Error fetching profile for file: ${fileName}`, profileError); // Debugging: Individual fetch error
       }
     }
 
+    console.log("Fetched profiles:", profiles); // Debugging: Final profiles array
     renderProfiles(); // Render profiles after fetching
   } catch (error) {
-    console.error("Error loading profiles:", error);
+    console.error("Error loading profiles:", error); // Debugging: Overall fetch error
     profileList.innerHTML = "<p>Failed to load profiles. Check the console for details.</p>";
   }
 };
 
-
 // Render profiles based on mode and search query
 const renderProfiles = () => {
   profileList.innerHTML = ""; // Clear the current list
-  const query = searchInput.value.toLowerCase(); // Normalize the search query
+  const query = searchInput.value.toLowerCase().trim(); // Normalize the search query
 
-  // Filter profiles that are valid and match the search query
-  const filteredProfiles = profiles.filter(profile =>
-    profile && profile.name && profile.name.toLowerCase().includes(query)
-  );
+  // Filter valid profiles and match the search query
+  const filteredProfiles = profiles.filter(profile => {
+    if (profile && profile.name) {
+      return profile.name.toLowerCase().includes(query);
+    } else {
+      console.warn("Skipping invalid profile:", profile); // Debugging: Skipped invalid profile
+      return false;
+    }
+  });
 
   if (filteredProfiles.length === 0) {
     profileList.innerHTML = "<p>No profiles found.</p>";
     return;
   }
 
-  // Dynamically create profile items
+  // Dynamically render each filtered profile
   filteredProfiles.forEach(profile => {
     const name = profile.name;
     const urlSuffix = name.toLowerCase().replace(/\s+/g, ""); // Convert name to URL-friendly format
@@ -93,8 +100,9 @@ const renderProfiles = () => {
     `;
     profileList.appendChild(profileDiv);
   });
-};
 
+  console.log("Rendered profiles:", filteredProfiles); // Debugging: Rendered profiles
+};
 
 // Set active mode and re-render profiles
 const setMode = (newMode) => {
@@ -129,6 +137,7 @@ const createStars = () => {
 };
 
 // Initial Setup
+console.log("Initializing application..."); // Debugging: Initialization
 createStars(); // Add stars to the background
 fetchProfiles(); // Fetch profiles on load
 searchBtn.addEventListener("click", renderProfiles); // Add event listener for search
