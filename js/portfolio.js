@@ -1,12 +1,12 @@
 const params = new URLSearchParams(window.location.search);
-const profileName = params.get("name"); // Get name from URL, e.g., 'lukeweidner'
+const profileName = params.get("name"); // Get name from URL
 const content = document.getElementById("portfolioContent");
 const nameHeader = document.getElementById("profileName");
 
 if (!profileName) {
   content.innerHTML = "<p>No profile specified!</p>";
 } else {
-  fetch(`data/${profileName}.json`)
+  fetch(`https://starchart-988582688687.us-central1.run.app/getFile?fileName=${profileName}.json`)
     .then(response => response.json())
     .then(profile => {
       nameHeader.textContent = profile.name;
@@ -32,6 +32,6 @@ if (!profileName) {
       `;
     })
     .catch(err => {
-      content.innerHTML = `<p>Error loading profile: ${err}</p>`;
+      content.innerHTML = `<p>Error loading profile: ${err.message}</p>`;
     });
 }
