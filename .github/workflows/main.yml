@@ -1,25 +1,22 @@
-name: Deploy to GitHub Pages
+name: Deploy HTML and CSS to GitHub Pages
 
 on:
   push:
     branches:
       - main  # Trigger workflow on pushes to the main branch
 
-permissions:
-  contents: write  # Allow GitHub Actions to write to the branch
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+    # Step 1: Checkout the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      # Step 2: Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./  # Serve files from the root directory
+    # Step 2: Deploy to GitHub Pages
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
