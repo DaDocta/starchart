@@ -4,6 +4,7 @@ import "../styles/Home.css";
 
 const Home = () => {
   const [profiles, setProfiles] = useState([]);
+  const [filteredProfiles, setFilteredProfiles] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedName, setSelectedName] = useState("");
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const Home = () => {
   const listFilesUrl = "https://starchart-988582688687.us-central1.run.app/listFiles";
   const getFileUrl = "https://starchart-988582688687.us-central1.run.app/getFile";
 
-  // Fetch profiles (you can use useEffect if this is needed to auto-fetch on mount)
+  // Fetch JSON files from the bucket
   const fetchProfiles = async () => {
     try {
       const response = await fetch(listFilesUrl);
@@ -20,28 +21,28 @@ const Home = () => {
       const fileNames = await response.json();
       const fetchedProfiles = [];
 
-      for (const fileName of fileNames) {
-        try {
-          const profileResponse = await fetch(`${getFileUrl}?fileName=${fileName}`);
-          if (!profileResponse.ok) {
-            console.error(`Failed to fetch profile: ${fileName}`);
-            continue;
-          }
-          const profile = await profileResponse.json();
-          fetchedProfiles.push(profile);
-        } catch (error) {
-          console.error(`Error fetching profile "${fileName}":`, error);
-        }
-      }
+      // Extract profile names from file names (e.g., 'lukeweidner.json' -> 'Luke Weidner')
+      fileNames.forEach((fileName) => {
+        const name = fileName.replace(".json", "");
+        fetchedProfiles.push({ name, fileName });
+      });
 
       setProfiles(fetchedProfiles);
+      setFilteredProfiles(fetchedProfiles);
     } catch (error) {
       console.error("Error fetching profiles:", error);
     }
   };
 
   const handleSearch = (e) => {
-    setSearchQuery(e.target.value.toLowerCase());
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+
+    // Filter profiles based on the search query
+    const results = profiles.filter((profile) =>
+      profile.name.toLowerCase().includes(query)
+    );
+    setFilteredProfiles(results);
   };
 
   const selectName = (name) => {
@@ -56,17 +57,17 @@ const Home = () => {
     }
   };
 
-  // Filter profiles based on search
-  const filteredProfiles = profiles.filter((profile) =>
-    profile.name.toLowerCase().includes(searchQuery)
-  );
+  // Fetch profiles when the component loads
+  React.useEffect(() => {
+    fetchProfiles();
+  }, []);
 
   return (
     <div className="home">
       <h1>Choose an Option</h1>
       <div className="button-group">
         <button onClick={() => navigateToPage("edit")}>Edit</button>
-        <button onClick={() => navigateToPage("profile")}>Profile</button>
+        <button onClick={() => navigateToPage("portfolio")}>Portfolio</button>
         <button onClick={() => navigateToPage("everything")}>Everything</button>
       </div>
       <input
@@ -84,7 +85,6 @@ const Home = () => {
               onClick={() => selectName(profile.name)}
             >
               <h2>{profile.name}</h2>
-              <p>{profile.description || "No description available"}</p>
             </div>
           ))
         ) : (

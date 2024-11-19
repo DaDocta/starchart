@@ -1,6 +1,6 @@
 .home {
-    padding: 20px;
     text-align: center;
+    padding: 20px;
   }
   
   .button-group {
@@ -18,7 +18,6 @@
   
   .button-group button:hover {
     background-color: #21a1f1;
-    color: white;
   }
   
   input {
@@ -36,8 +35,8 @@
   }
   
   .profile {
+    padding: 10px;
     border: 1px solid #ddd;
-    padding: 15px;
     border-radius: 5px;
     background-color: #f9f9f9;
     cursor: pointer;
@@ -46,15 +45,5 @@
   .profile.selected {
     border: 2px solid #61dafb;
     background-color: #eaf6ff;
-  }
-  
-  .profile h2 {
-    margin: 0;
-    color: #333;
-  }
-  
-  .profile p {
-    margin: 5px 0;
-    color: #666;
   }
   
