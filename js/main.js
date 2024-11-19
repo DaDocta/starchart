@@ -1,21 +1,22 @@
 // Constants
-const profilesDir = "data"; // Directory for JSON profiles
+const listFilesUrl = 'https://starchart-988582688687.us-central1.run.app/listFiles'; // Replace with the URL for the listFiles function
+const getFileUrl = 'https://starchart-988582688687.us-central1.run.app/getFile';     // Replace with the URL for the getFile function
 const everythingPassword = "dadocta";
 
 // DOM Elements
 const searchInput = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
 const profileList = document.getElementById("profileList");
-const webPortfolioBtn = document.getElementById("webPortfolioBtn");
+const PortfolioBtn = document.getElementById("PortfolioBtn");
 const editBtn = document.getElementById("editBtn");
 const everythingBtn = document.getElementById("everythingBtn");
 
 // State
-let mode = "webPortfolio"; // Default view mode
+let mode = "Portfolio"; // Default view mode
 let profiles = []; // Stores all profiles
 
 // Event Listeners for Choice Buttons
-webPortfolioBtn.addEventListener("click", () => setMode("webPortfolio"));
+PortfolioBtn.addEventListener("click", () => setMode("Portfolio"));
 editBtn.addEventListener("click", () => setMode("edit"));
 everythingBtn.addEventListener("click", () => {
   const password = prompt("Enter the password to view Everything:");
@@ -26,23 +27,27 @@ everythingBtn.addEventListener("click", () => {
   }
 });
 
-// Fetch JSON profiles dynamically
+// Fetch JSON profiles dynamically from Google Cloud Functions
 const fetchProfiles = async () => {
   profileList.innerHTML = "<p>Loading profiles...</p>";
   try {
-    const response = await fetch(`${profilesDir}/index.json`); // Fetch index.json containing file names
-    const files = await response.json();
+    // Fetch the list of JSON files
+    const response = await fetch(listFilesUrl);
+    const fileNames = await response.json();
 
+    // Fetch each JSON file's content
     profiles = [];
-    for (const file of files) {
-      const profileResponse = await fetch(`${profilesDir}/${file}`);
+    for (const fileName of fileNames) {
+      const profileResponse = await fetch(`${getFileUrl}?fileName=${fileName}`);
       const profile = await profileResponse.json();
       profiles.push(profile);
     }
+
+    // Render the profiles
     renderProfiles();
   } catch (error) {
     console.error("Error loading profiles:", error);
-    profileList.innerHTML = "<p>Failed to load profiles. Check console for details.</p>";
+    profileList.innerHTML = "<p>Failed to load profiles. Check the console for details.</p>";
   }
 };
 
@@ -68,7 +73,7 @@ const renderProfiles = () => {
     profileDiv.className = "profile-item";
     profileDiv.innerHTML = `
       <h2>${name}</h2>
-      <a href="site/webportfolio.html?name=${urlSuffix}">Web Portfolio</a>
+      <a href="site/portfolio.html?name=${urlSuffix}">Portfolio</a>
       <a href="site/edit.html?name=${urlSuffix}">Edit</a>
       <a href="site/everything.html?name=${urlSuffix}">Everything</a>
     `;

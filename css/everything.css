@@ -1,0 +1,12 @@
+/* Everything Page Styles */
+
+pre {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: monospace;
+    color: #ffffff;
+    line-height: 1.5;
+  }
+  

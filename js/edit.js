@@ -1,53 +1,51 @@
-// Add random stars to the background
-const createStars = () => {
-    const starryBg = document.createElement("div");
-    starryBg.className = "starry-bg";
-  
-    for (let i = 0; i < 100; i++) {
-      const star = document.createElement("div");
-      star.className = "star";
-      star.style.width = `${Math.random() * 3}px`;
-      star.style.height = star.style.width;
-      star.style.top = `${Math.random() * 100}%`;
-      star.style.left = `${Math.random() * 100}%`;
-      starryBg.appendChild(star);
-    }
-  
-    document.body.appendChild(starryBg);
-  };
-  
-createStars();
-
-
-const editProfileName = window.location.pathname.split("/").pop();
+const params = new URLSearchParams(window.location.search);
+const profileName = params.get("name"); // Get name from URL
 const editContent = document.getElementById("editContent");
 
-fetch(`data/${editProfileName}.json`)
-  .then(response => response.json())
-  .then(profile => {
-    editContent.innerHTML = `
-      <form id="editForm">
-        <label>
-          Name:
-          <input type="text" name="name" value="${profile.name}">
-        </label>
-        <label>
-          About:
-          <textarea name="about">${profile.about}</textarea>
-        </label>
-        <button type="submit">Save</button>
-      </form>
-    `;
+if (!profileName) {
+  editContent.innerHTML = "<p>No profile specified!</p>";
+} else {
+  fetch(`https://starchart-988582688687.us-central1.run.app/getFile?fileName=${profileName}.json`)
+    .then(response => response.json())
+    .then(profile => {
+      editContent.innerHTML = `
+        <form id="editForm">
+          <label>
+            Name:
+            <input type="text" name="name" value="${profile.name}">
+          </label>
+          <label>
+            About:
+            <textarea name="about">${profile.about}</textarea>
+          </label>
+          <button type="submit">Save</button>
+        </form>
+      `;
 
-    document.getElementById("editForm").onsubmit = (e) => {
-      e.preventDefault();
-      const updatedProfile = {
-        name: e.target.name.value,
-        about: e.target.about.value
+      document.getElementById("editForm").onsubmit = (e) => {
+        e.preventDefault();
+        const updatedProfile = {
+          name: e.target.name.value,
+          about: e.target.about.value
+        };
+
+        // API call to save updated profile
+        fetch(`https://starchart-988582688687.us-central1.run.app/updateFile`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ fileName: `${profileName}.json`, content: updatedProfile })
+        })
+          .then(response => {
+            if (response.ok) {
+              alert("Profile updated successfully!");
+            } else {
+              throw new Error("Failed to update profile.");
+            }
+          })
+          .catch(err => alert(`Error: ${err.message}`));
       };
-      console.log("Updated Profile:", updatedProfile); // Replace with API call to save
-    };
-  })
-  .catch(err => console.error("Error loading profile:", err));
-  
-  
+    })
+    .catch(err => {
+      editContent.innerHTML = `<p>Error loading profile: ${err.message}</p>`;
+    });
+}

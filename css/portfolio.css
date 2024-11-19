@@ -1,0 +1,23 @@
+/* Portfolio Page Styles */
+
+.main-content section {
+    margin-bottom: 20px;
+  }
+  
+  .main-content section h2 {
+    font-size: 1.5rem;
+    color: #ffd700;
+  }
+  
+  .main-content section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .main-content section ul li {
+    margin-bottom: 5px;
+    padding: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+  }
+  

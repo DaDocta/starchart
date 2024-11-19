@@ -1,0 +1,20 @@
+/* Home Page Styles */
+
+#choiceButtons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  #choiceButtons button {
+    margin: 5px;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  #choiceButtons button.active {
+    background-color: #ffd700; /* Highlighted */
+    font-weight: bold;
+  }
+  
