@@ -1,4 +1,4 @@
-name: Deploy Static Site
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main  # Trigger deployment when pushing to the main branch
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,11 +14,22 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Step 2: Verify Deployment Directory
-    # Optional: Ensure your files are in the correct location (root folder)
-    - name: Ensure Static Files Exist
-      run: |
-        ls -la # List files for debugging
+    # Step 2: Set up Node.js (if your site requires it)
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16' # Specify your Node.js version
 
-    # Step 3: Skip gh-pages Step
-    # Since you are deploying directly from `main`, you do not need to push files to a different branch.
+    # Step 3: Install dependencies and build your site (if applicable)
+    # Skip this step if your site doesn't require a build process
+    - name: Install dependencies and build
+      run: |
+        npm install
+        npm run build # Use your actual build command
+
+    # Step 4: Deploy to GitHub Pages
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public # Replace with your build output directory
