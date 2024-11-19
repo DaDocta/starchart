@@ -9,6 +9,7 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedOption, setSelectedOption] = useState('edit'); // Default dropdown option
   const [error, setError] = useState(null);
+  const [notFound, setNotFound] = useState(false); // State for "not found" message
 
   const listFilesUrl = 'https://starchart-988582688687.us-central1.run.app/listFiles';
   const getFileUrl = 'https://starchart-988582688687.us-central1.run.app/getFile';
@@ -34,13 +35,18 @@ const Home = () => {
     fetchProfiles();
   }, []);
 
-  const filteredProfiles = profiles.filter((profile) =>
-    profile.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const handleSearch = () => {
+    const profile = profiles.find(
+      (p) => p.name.toLowerCase() === searchQuery.toLowerCase().trim()
+    );
 
-  const handleNavigate = (profileName) => {
-    const urlSuffix = profileName.toLowerCase().replace(/\s+/g, '');
-    navigate(`/starchart/${selectedOption}/${urlSuffix}`);
+    if (profile) {
+      const urlSuffix = profile.name.toLowerCase().replace(/\s+/g, '');
+      setNotFound(false); // Reset "not found" state
+      navigate(`/starchart/${selectedOption}/${urlSuffix}`);
+    } else {
+      setNotFound(true); // Display "not found" message
+    }
   };
 
   if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
@@ -64,15 +70,20 @@ const Home = () => {
             <option value="portfolio">Portfolio</option>
             <option value="everything">Everything</option>
           </select>
+          <button onClick={handleSearch}>Search</button>
         </div>
       </header>
       <main>
+        {notFound && <div className="not-found">Profile not found. Please try again.</div>}
         <div className="profile-list">
-          {filteredProfiles.map((profile) => (
+          {profiles.map((profile) => (
             <div
               key={profile.name}
               className="profile-item"
-              onClick={() => handleNavigate(profile.name)}
+              onClick={() => {
+                const urlSuffix = profile.name.toLowerCase().replace(/\s+/g, '');
+                navigate(`/starchart/${selectedOption}/${urlSuffix}`);
+              }}
             >
               <h2>{profile.name}</h2>
               <p>{profile.about}</p>
