@@ -3,7 +3,7 @@ name: Deploy HTML and CSS to GitHub Pages
 on:
   push:
     branches:
-      - main  # Trigger workflow on pushes to the main branch
+      - main  # Deploy on pushes to the main branch
 
 jobs:
   deploy:
@@ -19,4 +19,5 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./  # Deploy the repository root
+        publish_branch: main
+        publish_dir: ./  # Root directory of your site
