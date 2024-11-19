@@ -69,18 +69,38 @@ const fetchProfiles = async () => {
 
 // Render profiles based on mode and search query
 const renderProfiles = () => {
+  console.log("Starting renderProfiles function"); // Debugging
   profileList.innerHTML = ""; // Clear the current list
+
+  // Check if searchInput is defined
+  if (!searchInput || typeof searchInput.value !== 'string') {
+    console.error("searchInput is undefined or does not have a value property");
+    return;
+  }
+
   const query = searchInput.value.toLowerCase().trim(); // Normalize the search query
+  console.log("Search query:", query); // Debugging
+
+  // Check if profiles array is populated
+  if (!profiles || !Array.isArray(profiles)) {
+    console.error("Profiles array is undefined or not an array");
+    return;
+  }
+
+  console.log("Profiles array before filtering:", profiles); // Debugging
 
   // Filter valid profiles and match the search query
   const filteredProfiles = profiles.filter(profile => {
     if (profile && typeof profile.name === 'string') {
+      console.log("Processing profile:", profile.name); // Debugging
       return profile.name.toLowerCase().includes(query);
     } else {
       console.warn("Skipping invalid profile:", profile); // Debugging: Skipped invalid profile
       return false;
     }
   });
+
+  console.log("Filtered profiles:", filteredProfiles); // Debugging
 
   if (filteredProfiles.length === 0) {
     profileList.innerHTML = "<p>No profiles found.</p>";
@@ -103,7 +123,7 @@ const renderProfiles = () => {
     profileList.appendChild(profileDiv);
   });
 
-  console.log("Rendered profiles:", filteredProfiles); // Debugging: Rendered profiles
+  console.log("Rendered profiles successfully"); // Debugging
 };
 
 // Set active mode and re-render profiles
