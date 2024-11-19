@@ -1,5 +1,4 @@
 const fetchData = async (url, options = {}) => {
-  console.log(`Fetching from ${url} with options:`, options); // Debugging
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
@@ -7,15 +6,17 @@ const fetchData = async (url, options = {}) => {
       console.error(`Error from server (${response.status}): ${errorText}`);
       throw new Error(`Error: ${response.status} - ${errorText}`);
     }
+
     const contentType = response.headers.get('content-type');
     if (contentType && contentType.includes('application/json')) {
-      const data = await response.json();
-      console.log('Data fetched successfully:', data); // Debugging
-      return data;
+      return await response.json(); // Return parsed JSON
     }
-    return response; // For non-JSON responses
+    console.log('Non-JSON response received:', response);
+    return response; // Return raw response for non-JSON
   } catch (error) {
     console.error('Fetch error:', error);
     throw error;
   }
 };
+
+export default fetchData;

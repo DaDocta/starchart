@@ -13,22 +13,24 @@ const Home = () => {
   const getFileUrl = 'https://starchart-988582688687.us-central1.run.app/getFile';
 
   useEffect(() => {
-    console.log("Fetching profiles..."); // Debugging
     const fetchProfiles = async () => {
+      console.log('Fetching profiles from API...');
       try {
+        // Fetch list of file names
         const fileNames = await fetchData(listFilesUrl);
-        console.log("File names:", fileNames); // Debugging
+        console.log('Fetched file names:', fileNames);
 
+        // Fetch profiles for each file name
         const fetchedProfiles = await Promise.all(
           fileNames.map(async (fileName) => {
             const profile = await fetchData(`${getFileUrl}?fileName=${fileName}`);
-            console.log(`Fetched profile for ${fileName}:`, profile); // Debugging
+            console.log(`Fetched profile for ${fileName}:`, profile);
             return profile && profile.name ? profile : null;
           })
         );
 
-        setProfiles(fetchedProfiles.filter(Boolean));
-        console.log("Profiles set:", fetchedProfiles); // Debugging
+        setProfiles(fetchedProfiles.filter(Boolean)); // Filter out invalid profiles
+        console.log('Final profiles:', fetchedProfiles.filter(Boolean));
         setError(null);
       } catch (err) {
         console.error('Error fetching profiles:', err);
@@ -40,10 +42,9 @@ const Home = () => {
   }, []);
 
   const filteredProfiles = profiles.filter((profile) =>
-    profile.name.toLowerCase().includes(searchQuery.toLowerCase())
+    profile.name?.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  console.log("Filtered profiles:", filteredProfiles); // Debugging
+  console.log('Filtered profiles:', filteredProfiles);
 
   if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
 
@@ -64,7 +65,9 @@ const Home = () => {
             <div
               key={profile.name}
               className="profile-item"
-              onClick={() => navigate(`/portfolio/${profile.name.toLowerCase().replace(/\s+/g, '')}`)}
+              onClick={() =>
+                navigate(`/portfolio/${profile.name.toLowerCase().replace(/\s+/g, '')}`)
+              }
             >
               <h2>{profile.name}</h2>
               <p>{profile.about}</p>
