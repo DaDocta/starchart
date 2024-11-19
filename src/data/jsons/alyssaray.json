@@ -1,0 +1,78 @@
+{
+    "name": "Alyssa Ray",
+    "gender": "Female",
+    "location": {
+      "city": "Lexington",
+      "state": "Kentucky",
+      "country": "United States"
+    },
+    "about": "I am a second-year student at the University of Kentucky pursuing a degree in Integrated Strategic Communications and Digital Media & Design. I am passionate about outreach, social media management, marketing, event planning, and public relations. Currently, I am interning with the UK Office of Undergraduate Research's communication and marketing department, while also serving as a volunteer leader and social media lead for UK's Team Wildcat.",
+    "skills": [
+      "Social Media Outreach",
+      "Team Coordination",
+      "Creative Problem Solving",
+      "Team Leadership",
+      "Marketing",
+      "Event Planning",
+      "Web Development",
+      "Video Creation",
+      "Graphic Design",
+      "Management",
+      "Team Collaboration",
+      "Creativity Skills",
+      "English",
+      "Analytical Skills",
+      "Organization Skills",
+      "Teamwork",
+      "Social Media",
+      "Communication",
+      "Interpersonal Skills"
+    ],
+    "experience": [
+      {
+        "title": "Aperture Co-Chair of Marketing and Outreach",
+        "company": "University of Kentucky",
+        "type": "Part-time",
+        "duration": "Oct 2024 - Present",
+        "location": "Lexington, Kentucky, United States",
+        "description": "Develops, implements, and evaluates campus-wide marketing and outreach strategies. Handles social media engagement and collaborates with committees and offices to foster effective communication."
+      },
+      {
+        "title": "Social Media Manager",
+        "company": "University of Kentucky",
+        "type": "Part-time",
+        "duration": "Aug 2024 - Present",
+        "location": "Lexington, Kentucky, United States",
+        "description": "Creates and posts content on various social media platforms, managing promotional campaigns for the University of Kentucky's student section."
+      },
+      {
+        "title": "Student Marketing and Communications Assistant",
+        "company": "University of Kentucky",
+        "type": "Internship",
+        "duration": "Aug 2024 - Present",
+        "location": "Lexington, Kentucky, United States",
+        "description": "Curates and edits content for @ukyugr on Instagram, Facebook, X, and TikTok, contributing to the university's communication strategy."
+      }
+    ],
+    "education": [
+      {
+        "institution": "University of Kentucky",
+        "degree": "Integrated Strategic Communications and Digital Media & Design",
+        "duration": "Aug 2023 - Apr 2027"
+      },
+      {
+        "institution": "Centerville High School",
+        "degree": "High School Diploma",
+        "duration": "Aug 2019 - May 2023",
+        "activities": [
+          "Early Childhood Education Block Program",
+          "National Honors Society",
+          "Hope Squad",
+          "Volleyball",
+          "Bowling",
+          "Athletic Trainer's Student Aide"
+        ]
+      }
+    ]
+}
+  

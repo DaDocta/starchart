@@ -1,49 +1,36 @@
-.home {
-    text-align: center;
-    padding: 20px;
+/* src/styles/Home.css */
+
+.home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
+  color: white;
+  font-family: 'Cinzel', serif;
+}
+
+.home-content p {
+  margin-bottom: 20px;
+}
+
+.stars-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+@media (orientation: portrait) {
+  .home-content p {
+    font-size: 9vw; /* Increase font size specifically for portrait mode */
   }
-  
-  .button-group {
-    margin-bottom: 20px;
+}
+
+@media (orientation: landscape) {
+  .home-content p {
+    font-size: 5vw; /* Increase font size specifically for portrait mode */
   }
-  
-  .button-group button {
-    margin: 5px;
-    padding: 10px 20px;
-    background-color: #61dafb;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .button-group button:hover {
-    background-color: #21a1f1;
-  }
-  
-  input {
-    width: 100%;
-    padding: 10px;
-    margin: 20px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .profiles {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .profile {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    cursor: pointer;
-  }
-  
-  .profile.selected {
-    border: 2px solid #61dafb;
-    background-color: #eaf6ff;
-  }
-  
+}

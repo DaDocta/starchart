@@ -1,0 +1,20 @@
+{
+    "name": "Cole Greenman",
+    "gender": "Male",
+    "location": {
+      "city": "Lexington",
+      "state": "Kentucky",
+      "country": "United States"
+    },
+    "about": "Student at the University of Kentucky pursuing a Bachelor of Fine Arts in Business Administration and Management.",
+    "skills": [],
+    "experience": [],
+    "education": [
+      {
+        "institution": "University of Kentucky",
+        "degree": "Business Administration and Management",
+        "duration": "2022 - 2026"
+      }
+    ]
+}
+  

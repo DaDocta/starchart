@@ -1,0 +1,48 @@
+{
+    "name": "Parker Cleveland",
+    "gender": "Male",
+    "location": {
+      "city": "Fort Thomas",
+      "state": "Kentucky",
+      "country": "United States"
+    },
+    "about": "Videographer with experience in entrepreneurial ventures and creative film editing. Passionate about storytelling through visual media and networking to foster collaboration. Aspiring orthodontist currently studying at the University of Kentucky.",
+    "skills": [
+      "Networking",
+      "Writing",
+      "English",
+      "Film Editing",
+      "Brainstorm Facilitation"
+    ],
+    "experience": [
+      {
+        "title": "Entrepreneur",
+        "company": "Kentucky Governors School for Entrepreneurs",
+        "type": "Full-time",
+        "duration": "Jun 2021 - Present",
+        "location": "",
+        "description": "Develops and implements creative entrepreneurial ideas with a focus on innovative solutions."
+      },
+      {
+        "title": "Videographer",
+        "company": "Self-employed",
+        "type": "Freelance",
+        "duration": "Aug 2018 - Present",
+        "location": "Fort Thomas, Kentucky, United States",
+        "description": "Creates, edits, and produces high-quality video content for various clients, specializing in storytelling through visual media."
+      }
+    ],
+    "education": [
+      {
+        "institution": "University of Kentucky",
+        "degree": "Orthodontics",
+        "duration": "Current"
+      },
+      {
+        "institution": "Highlands High School",
+        "degree": "Health + Film",
+        "duration": "Graduation Year Not Provided"
+      }
+    ]
+  }
+  

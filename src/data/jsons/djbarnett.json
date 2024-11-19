@@ -1,0 +1,48 @@
+{
+    "name": "DJ Barnett",
+    "gender": "Male",
+    "location": {
+      "city": "Lexington",
+      "state": "Kentucky",
+      "country": "United States"
+    },
+    "about": "Student at the University of Kentucky pursuing degrees in Business Administration and Digital Media Design. Aspiring to work with a Major League Baseball organization.",
+    "skills": [
+      "Adobe Photoshop",
+      "Photography",
+      "Digital Photography",
+      "Editing",
+      "Image Editing",
+      "Attention to Detail",
+      "High Level Of Accuracy",
+      "Teamwork",
+      "Leadership",
+      "Communication"
+    ],
+    "experience": [
+      {
+        "title": "Graphic Designer",
+        "company": "Self-employed",
+        "type": "Freelance",
+        "duration": "Dec 2021 - Present",
+        "location": "Remote",
+        "description": "Creates digital and print designs using Adobe Photoshop. Specializes in photography, editing, and image enhancement."
+      },
+      {
+        "title": "Umpire",
+        "company": "Frankfort Parks & Recreation",
+        "type": "Seasonal",
+        "duration": "Aug 2021 - Present",
+        "location": "Frankfort, Kentucky, United States",
+        "description": "Officiates games with attention to detail and accuracy. Demonstrates teamwork, leadership, and communication skills in a dynamic environment."
+      }
+    ],
+    "education": [
+      {
+        "institution": "University of Kentucky",
+        "degree": "Business Administration and Digital Media Design",
+        "duration": "2022 - 2026"
+      }
+    ]
+  }
+  

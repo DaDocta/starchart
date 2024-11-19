@@ -1,0 +1,54 @@
+{
+    "name": "Iain Ray",
+    "gender": "Male",
+    "location": {
+      "city": "Bay Village",
+      "state": "Ohio",
+      "country": "United States"
+    },
+    "about": "Honors Finance student at the University of Kentucky. Experienced in leadership, safety, and public relations through my role as a lifeguard and swim mentor. I am actively involved on campus as the activities chair for UK Club Running and a member of Sigma Nu fraternity.",
+    "skills": [
+      "First Aid",
+      "Youth Mentoring",
+      "Cardiopulmonary Resuscitation (CPR)",
+      "Public Speaking",
+      "Public Relations",
+      "Microsoft Excel",
+      "Microsoft Word",
+      "Leadership",
+      "Research Skills"
+    ],
+    "experience": [
+      {
+        "title": "Lifeguard",
+        "company": "Bay Village Family Aquatic Center",
+        "type": "Part-time",
+        "duration": "Apr 2021 - Present",
+        "location": "Bay Village, Ohio, United States",
+        "description": "Ensures the safety of patrons through leadership in safety and prevention. Conducts swim lessons and collaborates with a team to perform life-saving operations when necessary."
+      }
+    ],
+    "education": [
+      {
+        "institution": "University of Kentucky",
+        "degree": "Finance",
+        "duration": "Aug 2023 - May 2027",
+        "activities": [
+          "Activities Chair for UK Club Running",
+          "Sigma Nu Fraternity"
+        ]
+      },
+      {
+        "institution": "Bay High School",
+        "degree": "High School Diploma",
+        "duration": "Aug 2019 - May 2023",
+        "activities": [
+          "National Honor Society",
+          "Key Club",
+          "Youth Philanthropic Foundation",
+          "Student Council"
+        ]
+      }
+    ]
+  }
+  
