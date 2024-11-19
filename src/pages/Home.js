@@ -9,7 +9,7 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedOption, setSelectedOption] = useState('edit'); // Default dropdown option
   const [error, setError] = useState(null);
-  const [notFound, setNotFound] = useState(false); // State for "not found" message
+  const [notFound, setNotFound] = useState(false);
 
   const listFilesUrl = 'https://starchart-988582688687.us-central1.run.app/listFiles';
   const getFileUrl = 'https://starchart-988582688687.us-central1.run.app/getFile';
@@ -29,19 +29,19 @@ const Home = () => {
                 console.log(`Fetched profile for ${fileName}:`, profile);
                 return profile;
               } else {
-                console.warn(`Invalid or missing profile data for ${fileName}:`, profile);
+                console.warn(`Invalid profile for ${fileName}:`, profile);
                 return null;
               }
-            } catch (error) {
-              console.error(`Error fetching profile for ${fileName}:`, error);
+            } catch (err) {
+              console.error(`Error fetching profile for ${fileName}:`, err);
               return null;
             }
           })
         );
 
-        const validProfiles = fetchedProfiles.filter(Boolean); // Filter out null profiles
+        const validProfiles = fetchedProfiles.filter(Boolean);
+        console.log('Valid profiles:', validProfiles);
         setProfiles(validProfiles);
-        console.log('Final profiles:', validProfiles);
         setError(null);
       } catch (err) {
         console.error('Error fetching profiles:', err);
@@ -53,19 +53,19 @@ const Home = () => {
   }, []);
 
   const handleSearch = () => {
-    console.log('Search query:', searchQuery);
-    const profile = profiles.find(
-      (p) => p.name.toLowerCase() === searchQuery.toLowerCase().trim()
-    );
+    const query = searchQuery.toLowerCase().trim();
+    console.log('Search query:', query);
+
+    const profile = profiles.find((p) => p.name.toLowerCase() === query);
 
     if (profile) {
       const urlSuffix = profile.name.toLowerCase().replace(/\s+/g, '');
       console.log(`Navigating to /starchart/${selectedOption}/${urlSuffix}`);
-      setNotFound(false); // Reset "not found" state
+      setNotFound(false);
       navigate(`/starchart/${selectedOption}/${urlSuffix}`);
     } else {
-      console.warn('Profile not found for query:', searchQuery);
-      setNotFound(true); // Display "not found" message
+      console.warn('No profile found for query:', query);
+      setNotFound(true);
     }
   };
 
