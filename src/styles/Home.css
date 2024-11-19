@@ -1,0 +1,35 @@
+.home {
+    padding: 20px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .profiles {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .profile {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .profile h2 {
+    margin: 0;
+    color: #333;
+  }
+  
+  .profile p {
+    margin: 5px 0;
+    color: #666;
+  }
+  
