@@ -6,7 +6,7 @@ on:
       - main  # Trigger workflow on pushes to the main branch
 
 permissions:
-  contents: write  # Ensure GitHub Actions can write to the branch
+  contents: write  # Allow GitHub Actions to write to the branch
 
 jobs:
   deploy:
@@ -17,19 +17,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Step 2: Optional: Build the project (skip if not needed)
-      - name: Build Project
-        run: |
-          if [ -f package.json ]; then
-            npm install
-            npm run build
-          fi
-
-      # Step 3: Deploy to the main branch
-      - name: Commit and Push Changes
-        run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "actions@github.com"
-          git add .
-          git commit -m "Update site on push to main branch" || echo "No changes to commit"
-          git push origin main
+      # Step 2: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./  # Serve files from the root directory
