@@ -14,7 +14,6 @@ const App = () => {
 
   return (
     <AuthProvider>
-
       <div className="page-content" ref={nodeRef}>
         <AuthContext.Consumer>
           {({ isAuthenticated }) => (
