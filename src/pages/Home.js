@@ -11,9 +11,8 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [notFound, setNotFound] = useState(false);
 
-  const baseUrl = 'https://<region>-<project>.cloudfunctions.net/starchartFunction';
-  const listFilesUrl = `${baseUrl}/listFiles`;
-  const getFileUrl = `${baseUrl}/getFile`;
+  const listFilesUrl = 'https://starchart-988582688687.us-central1.run.app/listFiles';
+  const getFileUrl = 'https://starchart-988582688687.us-central1.run.app/getFile';
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -21,7 +20,7 @@ const Home = () => {
         console.log('Fetching file names...');
         const fileNames = await fetchData(listFilesUrl);
         console.log('Fetched file names:', fileNames);
-
+  
         const fetchedProfiles = await Promise.all(
           fileNames.map(async (fileName) => {
             try {
@@ -39,7 +38,7 @@ const Home = () => {
             }
           })
         );
-
+  
         const validProfiles = fetchedProfiles.filter(Boolean); // Keep only valid profiles
         console.log('Valid profiles:', validProfiles);
         setProfiles(validProfiles);
@@ -48,16 +47,17 @@ const Home = () => {
         setError(error.message);
       }
     };
-
+  
     fetchProfiles();
   }, []);
+  
 
   const handleSearch = () => {
     const query = searchQuery.toLowerCase().trim();
     console.log('Search query:', query);
-
+  
     const profile = profiles.find((p) => p.name.toLowerCase() === query);
-
+  
     if (profile) {
       const urlSuffix = profile.name.toLowerCase().replace(/\s+/g, '');
       console.log(`Navigating to /starchart/${selectedOption}/${urlSuffix}`);
@@ -68,6 +68,7 @@ const Home = () => {
       setNotFound(true);
     }
   };
+  
 
   if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
 
