@@ -38,21 +38,30 @@ const fetchProfiles = async () => {
 
     profiles = [];
     for (const fileName of fileNames) {
-      const profileResponse = await fetch(`${getFileUrl}?fileName=${fileName}`);
-      if (!profileResponse.ok) {
-        console.error(`Error fetching profile for file: ${fileName}`);
-        continue;
+      try {
+        const profileResponse = await fetch(`${getFileUrl}?fileName=${fileName}`);
+        if (!profileResponse.ok) {
+          console.error(`Error fetching profile for file: ${fileName}`);
+          continue; // Skip problematic files
+        }
+        const profile = await profileResponse.json();
+        if (profile && profile.name) {
+          profiles.push(profile); // Add only valid profiles
+        } else {
+          console.warn(`Profile is missing a name or is invalid: ${fileName}`, profile);
+        }
+      } catch (profileError) {
+        console.error(`Error fetching profile for file: ${fileName}`, profileError);
       }
-      const profile = await profileResponse.json();
-      if (profile && profile.name) profiles.push(profile);
     }
 
-    renderProfiles();
+    renderProfiles(); // Render profiles after fetching
   } catch (error) {
     console.error("Error loading profiles:", error);
     profileList.innerHTML = "<p>Failed to load profiles. Check the console for details.</p>";
   }
 };
+
 
 // Render profiles based on mode and search query
 const renderProfiles = () => {
