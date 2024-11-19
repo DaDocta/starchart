@@ -7,12 +7,8 @@ const fetchData = async (url, options = {}) => {
       throw new Error(`Error: ${response.status} - ${errorText}`);
     }
 
-    const contentType = response.headers.get('content-type');
-    if (contentType && contentType.includes('application/json')) {
-      return await response.json(); // Return parsed JSON
-    }
-    console.log('Non-JSON response received:', response);
-    return response; // Return raw response for non-JSON
+    // Always attempt to parse the response as JSON
+    return await response.json();
   } catch (error) {
     console.error('Fetch error:', error);
     throw error;
