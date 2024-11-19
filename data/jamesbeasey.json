@@ -1,0 +1,73 @@
+{
+    "name": "James Beasey",
+    "gender": "Male",
+    "location": {
+      "city": "Fort Thomas",
+      "state": "Kentucky",
+      "country": "United States"
+    },
+    "about": "Sophomore at Miami University's Farmer School of Business, majoring in Marketing. Skilled in Python, SQL, and creative problem-solving, with a passion for using design to provide innovative solutions. Experienced in customer service, project management, and branding through roles at Valvoline Inc. and Otto Printing Inc.",
+    "skills": [
+      "Organizational Leadership",
+      "Logo Design",
+      "Project Management",
+      "Customer Service",
+      "Teamwork",
+      "Automotive Repair",
+      "Creative Problem Solving",
+      "Visual Arts",
+      "Adobe Inventor Certified"
+    ],
+    "experience": [
+      {
+        "title": "Senior Technician",
+        "company": "Valvoline Inc.",
+        "type": "Full-time",
+        "duration": "Jun 2022 - Present",
+        "location": "Cold Spring, Kentucky, United States",
+        "description": "Ensured positive customer experiences by leveraging product expertise, improving workflow, and resolving customer concerns effectively."
+      },
+      {
+        "title": "Undergraduate Assistant",
+        "company": "Miami University",
+        "type": "Part-time",
+        "duration": "Jan 2024 - May 2024",
+        "location": "Oxford, Ohio, United States",
+        "description": "Assisted students with assignments, provided feedback, and supported the professor during lessons by organizing attendance and lesson materials."
+      },
+      {
+        "title": "Intern",
+        "company": "Otto Printing Inc.",
+        "type": "Part-time",
+        "duration": "Jan 2023 - Apr 2023",
+        "location": "Newport, Kentucky, United States",
+        "description": "Managed leads and existing business, produced accurate invoices, and ensured solutions aligned with customer needs."
+      },
+      {
+        "title": "Branding Project Lead",
+        "company": "Fort Thomas Swim Club Inc.",
+        "type": "Part-time",
+        "duration": "Jun 2022 - Jun 2022",
+        "location": "Fort Thomas, Kentucky, United States",
+        "description": "Designed branding for the club's swim team, managed project milestones, and developed a timeless branding strategy."
+      }
+    ],
+    "education": [
+      {
+        "institution": "Miami University",
+        "degree": "Marketing",
+        "duration": "2023 - 2027"
+      },
+      {
+        "institution": "Highlands High School",
+        "degree": "High School Diploma",
+        "duration": "Aug 2019 - Jun 2023",
+        "activities": [
+          "National Honor Society",
+          "Visual Arts",
+          "Certified in Adobe Inventor"
+        ]
+      }
+    ]
+  }
+  

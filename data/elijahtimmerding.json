@@ -1,0 +1,49 @@
+{
+    "name": "Elijah (Eli) Timmerding",
+    "gender": "Male",
+    "location": {
+      "city": "Union",
+      "state": "Kentucky",
+      "country": "United States"
+    },
+    "about": "I am a senior at Randall K. Cooper High School planning to attend the University of Kentucky to study Chemical Engineering. I also aim to pursue a second major in Business and earn an MBA. During high school, I actively participated in various clubs and achieved numerous honors, including being a Junior Marshal and Senior Homecoming Nominee. A highlight of my experience was working at my high school's spirit store, where I managed customers, designed and ordered clothing, and utilized point-of-sale systems.",
+    "skills": [
+      "Customer Service",
+      "Retail Management",
+      "Point of Sales",
+      "Design",
+      "Organization",
+      "Leadership"
+    ],
+    "experience": [
+      {
+        "title": "Employee",
+        "company": "Randall K. Cooper High School Spirit Store",
+        "type": "Part-time",
+        "duration": "Aug 2022 - May 2023",
+        "location": "Union, Kentucky, United States",
+        "description": "Managed customer interactions, created and entered purchase orders, and designed and ordered clothing for the school spirit store as part of a Retail Marketing class."
+      }
+    ],
+    "education": [
+      {
+        "institution": "University of Kentucky",
+        "degree": "Chemical Engineering",
+        "duration": "2023 - 2027"
+      },
+      {
+        "institution": "Randall K. Cooper High School",
+        "degree": "High School Diploma",
+        "duration": "2019 - 2023",
+        "activities": [
+          "Pep Club",
+          "Spanish Honor Society",
+          "National Honor Society",
+          "Cooper Can",
+          "Energy Saving Club",
+          "YoungLife Club"
+        ]
+      }
+    ]
+  }
+  

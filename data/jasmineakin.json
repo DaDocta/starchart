@@ -1,0 +1,31 @@
+{
+    "name": "Jasmine Akin",
+    "gender": "Female",
+    "location": {
+      "city": "Lexington",
+      "state": "Kentucky",
+      "country": "United States"
+    },
+    "about": "Digital and social media designer pursuing a Marketing degree at the University of Kentucky. Currently working as a Digital Media Manager, specializing in influencer marketing and digital communication.",
+    "skills": [
+      "Influencer Marketing"
+    ],
+    "experience": [
+      {
+        "title": "Digital Media Manager",
+        "company": "Brenda Pryor Coaching",
+        "type": "Internship",
+        "duration": "May 2024 - Present",
+        "location": "Somerset, Kentucky, United States",
+        "description": "Manages digital and social media strategies with a focus on influencer marketing to enhance brand presence."
+      }
+    ],
+    "education": [
+      {
+        "institution": "University of Kentucky",
+        "degree": "Marketing, Digital Communication and Media/Multimedia",
+        "duration": "2023 - 2026"
+      }
+    ]
+  }
+  
