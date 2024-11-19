@@ -57,9 +57,9 @@ const fetchProfiles = async () => {
 // Render profiles based on mode and search query
 const renderProfiles = () => {
   profileList.innerHTML = ""; // Clear the current list
-  const query = searchInput.value.toLowerCase();
+  const query = searchInput.value.toLowerCase(); // Normalize the search query
 
-  // Filter profiles based on search query
+  // Filter profiles that are valid and match the search query
   const filteredProfiles = profiles.filter(profile =>
     profile && profile.name && profile.name.toLowerCase().includes(query)
   );
@@ -69,7 +69,7 @@ const renderProfiles = () => {
     return;
   }
 
-  // Create profile items dynamically
+  // Dynamically create profile items
   filteredProfiles.forEach(profile => {
     const name = profile.name;
     const urlSuffix = name.toLowerCase().replace(/\s+/g, ""); // Convert name to URL-friendly format
@@ -85,6 +85,7 @@ const renderProfiles = () => {
     profileList.appendChild(profileDiv);
   });
 };
+
 
 // Set active mode and re-render profiles
 const setMode = (newMode) => {
