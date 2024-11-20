@@ -4,7 +4,7 @@ import fetchData from '../utils/fetchData';
 import '../styles/Portfolio.css';
 
 const Portfolio = () => {
-  const { name } = useParams();
+  const { name } = useParams(); // Use the name from the route parameter
   const [profile, setProfile] = useState(null);
   const [error, setError] = useState(null);
 
@@ -30,9 +30,65 @@ const Portfolio = () => {
 
   return (
     <div className="portfolio">
-      <h1>{profile.name}</h1>
-      <p>{profile.about}</p>
-      {/* Add more fields as needed */}
+      <header>
+        <h1>{profile.name || 'Name: N/A'}</h1>
+        <p>{profile.about || 'About: N/A'}</p>
+      </header>
+      <main>
+        <section>
+          <h2>Skills</h2>
+          <ul>
+            {profile.skills && profile.skills.length > 0
+              ? profile.skills.map((skill, index) => <li key={index}>{skill}</li>)
+              : <li>N/A</li>}
+          </ul>
+        </section>
+        <section>
+          <h2>Experience</h2>
+          {profile.experience && profile.experience.length > 0 ? (
+            profile.experience.map((job, index) => (
+              <div key={index}>
+                <h3>{job.title || 'Title: N/A'}</h3>
+                <p>{job.company || 'Company: N/A'}</p>
+                <p>{job.description || 'Description: N/A'}</p>
+                <p>{job.duration || 'Duration: N/A'}</p>
+                <p>{job.location || 'Location: N/A'}</p>
+              </div>
+            ))
+          ) : (
+            <p>N/A</p>
+          )}
+        </section>
+        <section>
+          <h2>Education</h2>
+          {profile.education && profile.education.length > 0 ? (
+            profile.education.map((edu, index) => (
+              <div key={index}>
+                <p>{edu.institution || 'Institution: N/A'}</p>
+                <p>{edu.degree || 'Degree: N/A'}</p>
+                <p>{edu.duration || 'Duration: N/A'}</p>
+              </div>
+            ))
+          ) : (
+            <p>N/A</p>
+          )}
+        </section>
+        <section>
+          <h2>Awards</h2>
+          {profile.awards && profile.awards.length > 0 ? (
+            profile.awards.map((award, index) => (
+              <div key={index}>
+                <p>{award.title || 'Title: N/A'}</p>
+                <p>{award.issuer || 'Issuer: N/A'}</p>
+                <p>{award.date || 'Date: N/A'}</p>
+                <p>{award.description || 'Description: N/A'}</p>
+              </div>
+            ))
+          ) : (
+            <p>N/A</p>
+          )}
+        </section>
+      </main>
     </div>
   );
 };

@@ -1,0 +1,63 @@
+.portfolio {
+    background: radial-gradient(circle at center, #0b1e36, #000000); /* Space-themed background */
+    color: white;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+  }
+  
+  header {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  header h1 {
+    font-size: 2.5em;
+    color: #ffcc00; /* Golden text for the name */
+  }
+  
+  header p {
+    font-size: 1.2em;
+    color: #e0e0e0;
+  }
+  
+  main {
+    padding: 20px;
+  }
+  
+  section {
+    margin-bottom: 30px;
+  }
+  
+  h2 {
+    font-size: 1.8em;
+    color: #ff9900; /* Orange headers */
+  }
+  
+  ul {
+    list-style-type: square;
+    padding-left: 20px;
+  }
+  
+  ul li {
+    font-size: 1.2em;
+    margin: 5px 0;
+  }
+  
+  section div {
+    margin-bottom: 15px;
+  }
+  
+  section div p {
+    margin: 5px 0;
+  }
+  
+  a {
+    color: #1e90ff;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  

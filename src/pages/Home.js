@@ -11,40 +11,26 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [notFound, setNotFound] = useState(false);
 
-  // Unified endpoint base URL
   const baseApiUrl = 'https://starchart-988582688687.us-central1.run.app';
 
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
-        console.log('Fetching file names...');
         const fileNames = await fetchData(`${baseApiUrl}/listFiles`);
-        console.log('Fetched file names:', fileNames);
-
         const fetchedProfiles = await Promise.all(
           fileNames.map(async (fileName) => {
             try {
               const profile = await fetchData(`${baseApiUrl}/getFile?fileName=${fileName}`);
-              if (profile && profile.name) {
-                console.log(`Valid profile for ${fileName}:`, profile);
-                return profile;
-              } else {
-                console.warn(`Invalid profile for ${fileName}:`, profile);
-                return null;
-              }
-            } catch (error) {
-              console.error(`Error fetching profile for ${fileName}:`, error);
+              return profile && profile.name ? profile : null;
+            } catch {
               return null;
             }
           })
         );
-
-        const validProfiles = fetchedProfiles.filter(Boolean); // Keep only valid profiles
-        console.log('Valid profiles:', validProfiles);
-        setProfiles(validProfiles);
-      } catch (error) {
-        console.error('Error fetching profiles:', error);
-        setError(error.message);
+        setProfiles(fetchedProfiles.filter(Boolean)); // Keep only valid profiles
+      } catch (err) {
+        console.error('Error fetching profiles:', err);
+        setError(err.message);
       }
     };
 
@@ -53,17 +39,14 @@ const Home = () => {
 
   const handleSearch = () => {
     const query = searchQuery.toLowerCase().trim();
-    console.log('Search query:', query);
-
     const profile = profiles.find((p) => p.name.toLowerCase() === query);
 
     if (profile) {
       const urlSuffix = profile.name.toLowerCase().replace(/\s+/g, '');
-      console.log(`Navigating to /starchart/${selectedOption}/${urlSuffix}`);
-      setNotFound(false);
-      navigate(`/starchart/${selectedOption}/${urlSuffix}`);
+      navigate(`/${selectedOption}/${urlSuffix}`);
+    } else if (selectedOption === 'edit' && !searchQuery) {
+      navigate('/edit'); // Navigate to global edit page
     } else {
-      console.warn('No profile found for query:', query);
       setNotFound(true);
     }
   };
@@ -81,10 +64,7 @@ const Home = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <select
-            value={selectedOption}
-            onChange={(e) => setSelectedOption(e.target.value)}
-          >
+          <select value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
             <option value="edit">Edit</option>
             <option value="portfolio">Portfolio</option>
             <option value="everything">Everything</option>
@@ -92,24 +72,7 @@ const Home = () => {
           <button onClick={handleSearch}>Search</button>
         </div>
       </header>
-      <main>
-        {notFound && <div className="not-found">Profile not found. Please try again.</div>}
-        <div className="profile-list">
-          {profiles.map((profile) => (
-            <div
-              key={profile.name}
-              className="profile-item"
-              onClick={() => {
-                const urlSuffix = profile.name.toLowerCase().replace(/\s+/g, '');
-                navigate(`/starchart/${selectedOption}/${urlSuffix}`);
-              }}
-            >
-              <h2>{profile.name}</h2>
-              <p>{profile.about}</p>
-            </div>
-          ))}
-        </div>
-      </main>
+      {notFound && <div>Profile not found. Please try again.</div>}
     </div>
   );
 };

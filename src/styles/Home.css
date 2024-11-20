@@ -1,11 +1,75 @@
-/* Home.css */
 .home {
-  background: lightblue; /* Add a background color */
-  color: black;
-  height: 100vh; /* Ensure it takes full screen */
+  background: radial-gradient(circle at center, #000033, #000000); /* Deep space theme */
+  color: white;
+  height: 100vh;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+header h1 {
+  text-align: center;
+  color: #f0f8ff;
+  margin: 20px;
+  font-size: 2.5em;
+}
+
+.navigation-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 250px;
+}
+
+select {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #4444ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #6666ff;
 }
 
 .profile-list {
-  border: 1px solid black; /* Highlight the profile list container */
-  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.profile-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(145deg, #1a1a50, #2a2a70);
+  border-radius: 10px;
+  padding: 20px;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px #888;
+}
+
+.profile-item:hover {
+  background: linear-gradient(145deg, #2a2a70, #1a1a50);
+  box-shadow: 0px 0px 20px #aaa;
+}
+
+.star-icon {
+  font-size: 2em;
+  color: gold;
 }

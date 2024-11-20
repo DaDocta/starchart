@@ -7,7 +7,7 @@ import './index.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename="/starchart"> {/* Set basename to match GitHub Pages subdirectory */}
+    <BrowserRouter> {/* Set basename to match GitHub Pages subdirectory */}
       <App />
     </BrowserRouter>
   </React.StrictMode>

@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import Home from './pages/Home';
 import Portfolio from './pages/Portfolio';
 import Edit from './pages/Edit';
@@ -18,12 +17,21 @@ const App = () => {
         <AuthContext.Consumer>
           {({ isAuthenticated }) => (
             <Routes location={location}>
+              {/* Home */}
               <Route path="/" element={<Home />} />
+              {/* Portfolio */}
               <Route path="/portfolio/:name" element={<Portfolio />} />
+              {/* Edit */}
+              {/* Global edit page */}
+              <Route path="/edit" element={<Edit />} />
+              {/* Edit specific profile */}
               <Route path="/edit/:name" element={<Edit />} />
+              {/* Everything */}
+              <Route path="/everything/:name" element={<Everything />} />
+              {/* Authentication-protected route */}
               <Route
-                path="/everything"
-                element={isAuthenticated ? <Everything /> : <Navigate to="/" replace />}
+                path="/protected"
+                element={isAuthenticated ? <Navigate to="/" replace /> : <Navigate to="/login" />}
               />
             </Routes>
           )}

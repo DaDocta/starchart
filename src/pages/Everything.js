@@ -1,45 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import fetchData from '../utils/fetchData';
-import '../styles/Everything.css';
+import { AuthContext } from '../AuthContext';
+import PasswordPrompt from '../components/PasswordPrompt';
 
 const Everything = () => {
-  const [profiles, setProfiles] = useState([]);
+  const { name } = useParams();
+  const { isAuthenticated, passwordEntered } = useContext(AuthContext);
+  const [profile, setProfile] = useState(null);
   const [error, setError] = useState(null);
 
-  const listFilesUrl = 'https://starchart-988582688687.us-central1.run.app/listFiles';
-  const getFileUrl = 'https://starchart-988582688687.us-central1.run.app/getFile';
+  const getFileUrl = name
+    ? `https://starchart-988582688687.us-central1.run.app/getFile?fileName=${name}.json`
+    : null;
 
   useEffect(() => {
-    const fetchProfiles = async () => {
-      try {
-        const fileNames = await fetchData(listFilesUrl);
-        const fetchedProfiles = await Promise.all(
-          fileNames.map(async (fileName) => {
-            const profile = await fetchData(`${getFileUrl}?fileName=${fileName}`);
-            return profile || null;
-          })
-        );
-        setProfiles(fetchedProfiles.filter(Boolean));
-        setError(null);
-      } catch (err) {
-        console.error('Error fetching profiles:', err);
-        setError(err.message);
-      }
-    };
+    if ((isAuthenticated || passwordEntered) && name) {
+      const fetchProfile = async () => {
+        try {
+          const data = await fetchData(getFileUrl);
+          setProfile(data);
+          setError(null);
+        } catch (err) {
+          console.error('Error fetching profile:', err);
+          setError(err.message);
+        }
+      };
 
-    fetchProfiles();
-  }, []);
+      fetchProfile();
+    }
+  }, [isAuthenticated, passwordEntered, name, getFileUrl]);
+
+  if (!isAuthenticated && !passwordEntered) {
+    return <PasswordPrompt onAuthenticated={() => {}} />;
+  }
 
   if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
+  if (!profile && name) return <div>Loading...</div>;
 
   return (
-    <div className="everything">
-      <h1>Everything</h1>
-      <div className="profile-list">
-        {profiles.map((profile) => (
-          <pre key={profile.name}>{JSON.stringify(profile, null, 2)}</pre>
-        ))}
-      </div>
+    <div>
+      <h1>{name ? `Everything: ${name}` : 'Everything'}</h1>
+      {profile ? (
+        <pre>{JSON.stringify(profile, null, 2)}</pre>
+      ) : (
+        <p>No specific profile selected. Access the global data or search for a profile.</p>
+      )}
     </div>
   );
 };
