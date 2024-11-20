@@ -10,7 +10,7 @@ const fetchData = async (url, options = {}) => {
     // Always attempt to parse the response as JSON
     return await response.json();
   } catch (error) {
-    console.error('Fetch error:', error);
+    console.error('Fetch error:', error.message);
     throw error;
   }
 };
