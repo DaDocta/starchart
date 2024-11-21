@@ -1,0 +1,140 @@
+/* General Layout */
+.edit {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  color: white;
+  min-height: 100vh;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.content {
+  width: 100%;
+  max-width: 1200px; /* Limit content width */
+}
+
+/* Section Headers */
+.edit h1 {
+  text-align: center;
+  color: #9fc3ff;
+  font-weight: bold;
+  line-height: 1.2;
+  text-shadow: 0 0 10px #9fc3ff, 0 0 20px #628cff, 0 0 30px #5074d1;
+  margin-bottom: 20px;
+}
+
+.edit h2 {
+  color: #ffcc66;
+  text-shadow: 0 0 10px #ffcc66, 0 0 20px #e6ac00;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Inputs */
+.edit input[type="text"] {
+  font-size: inherit;
+  color: white;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.7); /* Dark translucent background */
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Subtle glow */
+  outline: none;
+  margin: 5px;
+  width: 100%;
+  max-width: 400px; /* Smaller width for landscape */
+  box-sizing: border-box;
+}
+
+/* Buttons */
+.edit button,
+.edit .file-upload-label {
+  font-size: inherit;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 10px;
+  background: linear-gradient(145deg, #3b7cfa, #5c9aff);
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(59, 124, 250, 0.8); /* Radiant glow */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 5px;
+  width: 100%;
+  max-width: 150px; /* Smaller buttons */
+  text-align: center;
+}
+
+.edit button:hover,
+.edit .file-upload-label:hover {
+  background: linear-gradient(145deg, #2a5db8, #4a7bd1);
+  box-shadow: 0 0 30px rgba(59, 124, 250, 1); /* Brighter hover effect */
+}
+
+/* File Input */
+.edit input[type="file"] {
+  display: none; /* Hide the default file input */
+}
+
+/* Layout for Each Option */
+.option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Portrait Mode: Stacked Layout */
+@media (orientation: portrait) {
+   
+   .edit h1 {
+      font-size: 8vw;
+   }
+
+  .option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .edit input[type="text"],
+  .edit button {
+    max-width: 600px; /* Wider inputs/buttons for portrait */
+  }
+}
+
+/* Landscape Mode: Side-by-Side Layout */
+@media (orientation: landscape) {
+    .edit h1 {
+        font-size: 4vw;
+     }
+
+    .option {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center; /* Center within the parent container */
+      gap: 15px; /* Uniform spacing between children */
+      margin-bottom: 20px;
+    }
+  
+    .option h2 {
+      flex-shrink: 0; /* Prevent shrinking */
+      margin-right: 10px; /* Space between label and inputs */
+      text-align: center; /* Align labels consistently */
+    }
+  
+    .edit input[type="text"],
+    .edit button,
+    .edit .file-upload-label {
+      flex-grow: 1; /* Allow elements to scale */
+      max-width: 250px; /* Constrain size */
+      font-size: 0.9rem; /* Adjust font size */
+      margin: 5px; /* Consistent spacing */
+    }
+  }
+  

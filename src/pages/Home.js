@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import fetchData from '../utils/fetchData';
 import '../styles/Home.css';
+import BackgroundVideo from '../components/BackgroundVideo';
 
 const Home = () => {
   const navigate = useNavigate();
   const [profiles, setProfiles] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedOption, setSelectedOption] = useState('edit'); // Default dropdown option
+  const [selectedOption, setSelectedOption] = useState('portfolio'); // Default dropdown option changed to "portfolio"
   const [error, setError] = useState(null);
   const [notFound, setNotFound] = useState(false);
 
@@ -55,24 +56,34 @@ const Home = () => {
 
   return (
     <div className="home">
+      <BackgroundVideo />
       <header>
-        <h1>Star-Themed Portfolio</h1>
-        <div className="navigation-controls">
+        <p>Welcome to Star Chart!</p>
+        <nav className="navigation-controls">
           <input
             type="text"
             placeholder="Search profiles..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            aria-label="Search profiles"
           />
-          <select value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
-            <option value="edit">Edit</option>
+          <select
+            value={selectedOption}
+            onChange={(e) => setSelectedOption(e.target.value)}
+            aria-label="Select action"
+          >
             <option value="portfolio">Portfolio</option>
-            <option value="everything">Everything</option>
+            <option value="edit">Edit</option>
+            <option value="everything">Raw</option>
           </select>
           <button onClick={handleSearch}>Search</button>
-        </div>
+        </nav>
       </header>
-      {notFound && <div>Profile not found. Please try again.</div>}
+      {notFound && (
+        <div className="error-message">
+          <p>Profile not found. Please try again.</p>
+        </div>
+      )}
     </div>
   );
 };

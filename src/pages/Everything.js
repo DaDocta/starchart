@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import fetchData from '../utils/fetchData';
 import { AuthContext } from '../AuthContext';
 import PasswordPrompt from '../components/PasswordPrompt';
+import BackgroundVideo from '../components/BackgroundVideo';
+import '../styles/Everything.css';
 
 const Everything = () => {
   const { name } = useParams();
@@ -35,17 +37,37 @@ const Everything = () => {
     return <PasswordPrompt onAuthenticated={() => {}} />;
   }
 
-  if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
-  if (!profile && name) return <div>Loading...</div>;
+  if (error) {
+    return (
+      <div className="everything">
+        <BackgroundVideo />
+        <div className="error">Error: {error}</div>
+      </div>
+    );
+  }
+
+  if (!profile && name) {
+    return (
+      <div className="everything">
+        <BackgroundVideo />
+        <div className="loading">Loading...</div>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <h1>{name ? `Everything: ${name}` : 'Everything'}</h1>
-      {profile ? (
-        <pre>{JSON.stringify(profile, null, 2)}</pre>
-      ) : (
-        <p>No specific profile selected. Access the global data or search for a profile.</p>
-      )}
+    <div className="everything">
+      <BackgroundVideo />
+      <div className="content">
+        <h1>{name ? `Everything: ${name}` : 'Everything'}</h1>
+        {profile ? (
+          <pre className="json">
+            {JSON.stringify(profile, null, 2)}
+          </pre>
+        ) : (
+          <p>No specific profile selected. Access the global data or search for a profile.</p>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import fetchData from '../utils/fetchData';
+import Star from '../components/Star'; // Import the Star component
 import '../styles/Portfolio.css';
 
 const Portfolio = () => {
@@ -28,11 +29,18 @@ const Portfolio = () => {
   if (error) return <div style={{ color: 'red' }}>Error: {error}</div>;
   if (!profile) return <div>Loading...</div>;
 
+  const starCount = 100; // Number of stars to render
+
   return (
     <div className="portfolio">
+      {/* Render the stars */}
+      {Array.from({ length: starCount }).map((_, index) => (
+        <Star key={index} />
+      ))}
+
       <header>
         <h1>{profile.name || 'Name: N/A'}</h1>
-        <p>{profile.about || 'About: N/A'}</p>
+        <p className='about-text'>{profile.about || 'About: N/A'}</p>
       </header>
       <main>
         <section>

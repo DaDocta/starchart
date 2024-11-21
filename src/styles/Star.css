@@ -1,0 +1,29 @@
+/* Star Styling */
+.star {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.8); /* White with slight opacity */
+    border-radius: 50%; /* Make the star circular */
+    animation: twinkle 3s infinite ease-in-out, move 60s linear infinite; /* Twinkle and move slowly */
+  }
+
+  
+  /* Star Twinkle Animation */
+  @keyframes twinkle {
+    0%, 100% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  
+  /* Star Movement Animation */
+  @keyframes move {
+    from {
+      transform: translate(0, 0);
+    }
+    to {
+      transform: translate(var(--moveX, 0), var(--moveY, 0));
+    }
+  }
+  

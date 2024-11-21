@@ -1,63 +1,104 @@
+/* General Layout */
 .portfolio {
-    background: radial-gradient(circle at center, #0b1e36, #000000); /* Space-themed background */
-    color: white;
-    min-height: 100vh;
-    font-family: 'Arial', sans-serif;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(120deg, #0d0d0d, #1a0033, #090979, #000000); /* Space-like gradient */
+  position: relative; /* For stars and animations */
+  color: white;
+  font-family: 'Trebuchet MS', sans-serif;
+  min-height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden; /* Prevent star movement overflow */
+}
+
+.star {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.8); /* White with slight opacity */
+  border-radius: 50%; /* Make the star circular */
+  animation: twinkle 3s infinite ease-in-out, move 100s linear infinite; /* Twinkle and move slowly */
+}
+
+/* Star Twinkle Animation */
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.5;
   }
-  
-  header {
-    text-align: center;
-    padding: 20px;
+  50% {
+    opacity: 1;
   }
-  
-  header h1 {
-    font-size: 2.5em;
-    color: #ffcc00; /* Golden text for the name */
+}
+
+/* Star Movement Animation */
+@keyframes move {
+  0% {
+    transform: translate(0, 0);
   }
-  
-  header p {
-    font-size: 1.2em;
-    color: #e0e0e0;
+  50% {
+    transform: translate(var(--moveX, 0), var(--moveY, 0)); /* Move outward */
   }
-  
-  main {
-    padding: 20px;
+  100% {
+    transform: translate(0, 0); /* Return to the original position */
   }
-  
-  section {
+}
+
+
+/* Header Styling */
+header {
+  text-align: center;
+}
+
+.portfolio h1 {
+  font-weight: bold;
+  color: #9fc3ff;
+  text-shadow: 0 0 10px #9fc3ff, 0 0 20px #628cff, 0 0 30px #5074d1;
+}
+
+.portfolio p {
+  color: #bcd4ff;
+  text-shadow: 0 0 5px #bcd4ff;
+}
+
+/* Section Styling */
+main {
+  width: 100%;
+  max-width: 900px;
+}
+
+.portfolio h2 {
+  font-weight: bold;
+  color: #ffe066; /* Gold accent for section titles */
+  text-shadow: 0 0 10px #ffe066, 0 0 20px #ffcc33;
+}
+
+/* Unified Text Styling */
+ul,
+li,
+.portfolio p {
+  color: #e6e6fa; /* Unified light lavender for all text */
+  text-shadow: 0 0 5px #e6e6fa;
+  font-size: 1.1em;
+}
+
+.portfolio h3 {
+  color: #99ccff; /* Light blue for job titles */
+  text-shadow: 0 0 5px #99ccff;
+  margin-bottom: 5px;
+}
+
+@media (orientation: portrait) {
+  .about-text {
+    padding: 0 5vw;
+  }
+}
+
+@media (orientation: landscape) {
+  .about-text {
+    padding: 0 20vw;
+  }
+
+  .portfolio header {
     margin-bottom: 30px;
   }
-  
-  h2 {
-    font-size: 1.8em;
-    color: #ff9900; /* Orange headers */
-  }
-  
-  ul {
-    list-style-type: square;
-    padding-left: 20px;
-  }
-  
-  ul li {
-    font-size: 1.2em;
-    margin: 5px 0;
-  }
-  
-  section div {
-    margin-bottom: 15px;
-  }
-  
-  section div p {
-    margin: 5px 0;
-  }
-  
-  a {
-    color: #1e90ff;
-    text-decoration: none;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
+}
