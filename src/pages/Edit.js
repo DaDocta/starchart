@@ -8,7 +8,7 @@ const Edit = () => {
   const { isAuthenticated, passwordEntered } = useContext(AuthContext);
   const { name } = useParams(); // Get the name parameter from the URL
   const [fileName, setFileName] = useState('');
-  const [uploadedFile, setUploadedFile] = useState(null); // State to store the uploaded file
+  const [uploadedFile, setUploadedFile] = useState(null); // State to store the file
   const [newKey, setNewKey] = useState('');
   const [newValue, setNewValue] = useState('');
   const [editKey, setEditKey] = useState('');
