@@ -1,5 +1,5 @@
 /* General Layout */
-.everything {
+.raw {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -38,7 +38,7 @@
   }
   
   /* Background Video Styling */
-  .everything video {
+  .raw video {
     position: fixed;
     top: 50%;
     left: 50%;

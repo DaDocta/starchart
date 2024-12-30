@@ -74,7 +74,7 @@ const Home = () => {
           >
             <option value="portfolio">Portfolio</option>
             <option value="edit">Edit</option>
-            <option value="everything">Raw</option>
+            <option value="raw">Raw</option>
           </select>
           <button onClick={handleSearch}>Search</button>
         </nav>

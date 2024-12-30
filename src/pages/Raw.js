@@ -10,11 +10,12 @@ const Raw = () => {
   const { name } = useParams();
   const { isAuthenticated, passwordEntered } = useContext(AuthContext);
   const [profile, setProfile] = useState(null);
+  const [editableProfile, setEditableProfile] = useState('');
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState('');
 
-  const getFileUrl = name
-    ? `https://starchart-988582688687.us-central1.run.app/getFile?fileName=${name}.json`
-    : null;
+  const apiUrl = `https://starchart-988582688687.us-central1.run.app`;
+  const getFileUrl = name ? `${apiUrl}/getFile?fileName=${name}.json` : null;
 
   useEffect(() => {
     if ((isAuthenticated || passwordEntered) && name) {
@@ -22,6 +23,7 @@ const Raw = () => {
         try {
           const data = await fetchData(getFileUrl);
           setProfile(data);
+          setEditableProfile(JSON.stringify(data, null, 2)); // Initialize editable JSON
           setError(null);
         } catch (err) {
           console.error('Error fetching profile:', err);
@@ -33,13 +35,31 @@ const Raw = () => {
     }
   }, [isAuthenticated, passwordEntered, name, getFileUrl]);
 
+  const handleSave = async () => {
+    try {
+      const updatedProfile = JSON.parse(editableProfile); // Parse editable JSON
+      const response = await fetch(`${apiUrl}/editFile`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fileName: `${name}.json`, data: updatedProfile }),
+      });
+
+      if (!response.ok) throw new Error('Failed to save changes');
+      setMessage('Changes saved successfully.');
+      setProfile(updatedProfile); // Update original profile
+    } catch (err) {
+      console.error('Error saving profile:', err);
+      setError(err.message || 'Failed to save changes.');
+    }
+  };
+
   if (!isAuthenticated && !passwordEntered) {
     return <PasswordPrompt onAuthenticated={() => {}} />;
   }
 
   if (error) {
     return (
-      <div className="everything">
+      <div className="raw">
         <BackgroundVideo />
         <div className="error">Error: {error}</div>
       </div>
@@ -48,7 +68,7 @@ const Raw = () => {
 
   if (!profile && name) {
     return (
-      <div className="everything">
+      <div className="raw">
         <BackgroundVideo />
         <div className="loading">Loading...</div>
       </div>
@@ -56,14 +76,21 @@ const Raw = () => {
   }
 
   return (
-    <div className="everything">
+    <div className="raw">
       <BackgroundVideo />
       <div className="content">
-        <h1>{name ? `Everything: ${name}` : 'Everything'}</h1>
+        <h1>{name ? `Raw: ${name}` : 'Raw'}</h1>
         {profile ? (
-          <pre className="json">
-            {JSON.stringify(profile, null, 2)}
-          </pre>
+          <>
+            <textarea
+              className="json"
+              value={editableProfile}
+              onChange={(e) => setEditableProfile(e.target.value)} // Allow inline editing
+              rows="20"
+            />
+            <button onClick={handleSave}>Save Changes</button>
+            {message && <p className="success-message">{message}</p>}
+          </>
         ) : (
           <p>No specific profile selected. Access the global data or search for a profile.</p>
         )}
