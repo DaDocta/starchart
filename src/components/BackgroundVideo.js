@@ -13,8 +13,7 @@ const BackgroundVideo = ({ fallbackText = 'Your browser does not support the vid
 };
 
 BackgroundVideo.propTypes = {
-  videoSrc: PropTypes.string.isRequired,
-  fallbackText: PropTypes.string,
+  fallbackText: PropTypes.string, // Only fallbackText is configurable
 };
 
 export default BackgroundVideo;
