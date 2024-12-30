@@ -4,9 +4,9 @@ import fetchData from '../utils/fetchData';
 import { AuthContext } from '../AuthContext';
 import PasswordPrompt from '../components/PasswordPrompt';
 import BackgroundVideo from '../components/BackgroundVideo';
-import '../styles/Everything.css';
+import '../styles/Raw.css';
 
-const Everything = () => {
+const Raw = () => {
   const { name } = useParams();
   const { isAuthenticated, passwordEntered } = useContext(AuthContext);
   const [profile, setProfile] = useState(null);
@@ -72,4 +72,4 @@ const Everything = () => {
   );
 };
 
-export default Everything;
+export default Raw;

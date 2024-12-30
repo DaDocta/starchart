@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
+import PasswordPrompt from '../components/PasswordPrompt'; // <-- Import password prompt
 import BackgroundVideo from '../components/BackgroundVideo'; // Import background video component
 import '../styles/Edit.css'; // Import CSS for styling
 
@@ -120,8 +121,12 @@ const Edit = () => {
     }
   };
 
+  // ----------------------------------------------------------------------
+  // Require password prompt if the user is not yet authenticated or
+  // hasn't entered the correct password
+  // ----------------------------------------------------------------------
   if (!isAuthenticated && !passwordEntered) {
-    return <div>Please log in to access the editing functionality.</div>;
+    return <PasswordPrompt onAuthenticated={() => {}} />;
   }
 
   return (
@@ -132,34 +137,33 @@ const Edit = () => {
           <>
             <h1>Edit Options</h1>
             <div className="option">
-            <h2>Upload JSON File</h2>
-            <input
-              id="file-upload"
-              type="file"
-              onChange={handleFileChange} // Handle file selection
-            />
-            <label htmlFor="file-upload" className="file-upload-label">
-              Choose File
-            </label>
-            <button onClick={handleUploadFile}>Upload File</button>
-          </div>
-          <div className="option">
-            <h2>Add Key to All JSON Files</h2>
-            <input
-              type="text"
-              placeholder="New key"
-              value={newKey}
-              onChange={(e) => setNewKey(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Default value"
-              value={newValue}
-              onChange={(e) => setNewValue(e.target.value)}
-            />
-            <button onClick={handleAddKeyToAll}>Add Key</button>
-          </div>
-
+              <h2>Upload JSON File</h2>
+              <input
+                id="file-upload"
+                type="file"
+                onChange={handleFileChange} // Handle file selection
+              />
+              <label htmlFor="file-upload" className="file-upload-label">
+                Choose File
+              </label>
+              <button onClick={handleUploadFile}>Upload File</button>
+            </div>
+            <div className="option">
+              <h2>Add Key to All JSON Files</h2>
+              <input
+                type="text"
+                placeholder="New key"
+                value={newKey}
+                onChange={(e) => setNewKey(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Default value"
+                value={newValue}
+                onChange={(e) => setNewValue(e.target.value)}
+              />
+              <button onClick={handleAddKeyToAll}>Add Key</button>
+            </div>
           </>
         ) : (
           <>

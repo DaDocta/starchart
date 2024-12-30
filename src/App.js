@@ -3,7 +3,7 @@ import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Portfolio from './pages/Portfolio';
 import Edit from './pages/Edit';
-import Everything from './pages/Everything';
+import Raw from './pages/Raw';
 import { AuthProvider, AuthContext } from './AuthContext';
 import './styles/App.css';
 
@@ -27,7 +27,7 @@ const App = () => {
               {/* Edit specific profile */}
               <Route path="/edit/:name" element={<Edit />} />
               {/* Everything */}
-              <Route path="/everything/:name" element={<Everything />} />
+              <Route path="/raw/:name" element={<Raw />} />
               {/* Authentication-protected route */}
               <Route
                 path="/protected"
